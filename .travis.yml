@@ -27,5 +27,6 @@ notifications:
   email:
     recipients:
       - j_diogo_@hotmail.com
+notifications:
   slack: mei-1-team:cwpJmMaJv8OVNr4yIsRaioAe
-      on_success: always
+    on_success: always
