@@ -1,4 +1,3 @@
-/.idea/libraries
 .DS_Store
 /captures
 .externalNativeBuild
@@ -39,8 +38,9 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
 
 # Keystore files
 *.jks
 app/fabric.properties
+app/libs/
+.idea/
