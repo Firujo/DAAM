@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet;
+package pt.iul.iscte.daam.fitmeet.events;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,8 +15,9 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
+import pt.iul.iscte.daam.fitmeet.R;
 
-public class MainActivity extends AppCompatActivity
+public class EventsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   @Override protected void onCreate(Bundle savedInstanceState) {

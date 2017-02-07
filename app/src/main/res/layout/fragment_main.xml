@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="pt.iul.iscte.daam.fitmeet.MainActivityFragment"
+    tools:context="pt.iul.iscte.daam.fitmeet.events.EventsFragment"
     tools:showIn="@layout/app_bar_main">
 
   <TextView
