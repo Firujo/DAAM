@@ -29,7 +29,7 @@ public class EventDetailActivity extends AppCompatActivity {
     ab.setDisplayHomeAsUpEnabled(true);
     ab.setDisplayShowHomeEnabled(true);
 
-    // Get the requested note id
+    // Get the requested event id
     String eventId = getIntent().getStringExtra(EXTRA_EVENT_ID);
 
     //initFragment(EventDetailFragment.newInstance(eventId));
@@ -41,10 +41,9 @@ public class EventDetailActivity extends AppCompatActivity {
   }
 
   private void initFragment(Fragment detailFragment) {
-    // Add the NotesDetailFragment to the layout
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-    //transaction.add(R.id.contentFrame, detailFragment);
+    transaction.add(R.id.contentFrame, detailFragment);
     transaction.commit();
   }
 }
