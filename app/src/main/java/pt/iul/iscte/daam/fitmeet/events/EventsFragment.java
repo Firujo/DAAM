@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,16 +13,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import java.util.ArrayList;
 import java.util.List;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.data.Event;
+import pt.iul.iscte.daam.fitmeet.eventdetail.EventDetailActivity;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Created by jdandrade on 09/02/2017.
  */
 public class EventsFragment extends Fragment implements EventsContract.View {
   private EventsContract.UserActionsListener mActionsListener;
+  EventItemListener mItemListener = new EventItemListener() {
+    @Override public void onEventClick(Event clickedEvent) {
+      mActionsListener.openEventDetails(clickedEvent);
+    }
+  };
+  private EventsAdapter mListAdapter;
 
   public EventsFragment() {
+
   }
 
   public static EventsFragment newInstance() {
@@ -31,6 +42,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mActionsListener = new EventsPresenter(this);
+    mListAdapter = new EventsAdapter(new ArrayList<Event>(0), mItemListener);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +79,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     return view;
   }
 
-  @Override public void showEvents(List<?> events) {
+  @Override public void showEvents(List<Event> events) {
 
   }
 
@@ -75,7 +87,13 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     Snackbar.make(getView(), "TODO", Snackbar.LENGTH_LONG).setAction("Action", null).show();
   }
 
-  @Override public void showEventDetails() {
+  @Override public void showEventDetails(long eventId) {
+    Intent intent = new Intent(getContext(), EventDetailActivity.class);
+    intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
+    startActivity(intent);
+  }
 
+  public interface EventItemListener {
+    void onEventClick(Event clickedEvent);
   }
 }

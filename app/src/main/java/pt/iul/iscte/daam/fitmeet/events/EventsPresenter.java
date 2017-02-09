@@ -1,6 +1,7 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
 import android.support.annotation.NonNull;
+import pt.iul.iscte.daam.fitmeet.data.Event;
 
 /**
  * Created by jdandrade on 09/02/2017.
@@ -20,7 +21,7 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
     mEventsView.showAddEvent();
   }
 
-  @Override public void openEventDetails() {
-
+  @Override public void openEventDetails(@NonNull Event requestedEvent) {
+    mEventsView.showEventDetails(requestedEvent.getId());
   }
 }

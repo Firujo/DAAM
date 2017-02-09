@@ -1,6 +1,8 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.support.annotation.NonNull;
 import java.util.List;
+import pt.iul.iscte.daam.fitmeet.data.Event;
 
 /**
  * Created by jdandrade on 09/02/2017.
@@ -9,11 +11,11 @@ import java.util.List;
 public interface EventsContract {
   interface View {
 
-    void showEvents(List<?> events);
+    void showEvents(List<Event> events);
 
     void showAddEvent();
 
-    void showEventDetails();
+    void showEventDetails(long id);
   }
 
   interface UserActionsListener {
@@ -22,6 +24,6 @@ public interface EventsContract {
 
     void addNewEvent();
 
-    void openEventDetails();
+    void openEventDetails(@NonNull Event clickedEvent);
   }
 }

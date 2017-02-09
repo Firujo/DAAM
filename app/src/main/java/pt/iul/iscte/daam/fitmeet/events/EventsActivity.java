@@ -17,6 +17,9 @@ import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
 import pt.iul.iscte.daam.fitmeet.R;
 
+/**
+ * Created by jdandrade on 09/02/2017.
+ */
 public class EventsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
