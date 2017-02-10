@@ -1,6 +1,8 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +26,7 @@ public class EventsActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   private DrawerLayout drawer;
+  private ActionBarDrawerToggle actionBarDrawerToggle;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,18 +36,21 @@ public class EventsActivity extends AppCompatActivity
     // Set up the toolbar.
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    ActionBar ab = getSupportActionBar();
-    ab.setDisplayHomeAsUpEnabled(true);
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayHomeAsUpEnabled(true);
+      actionBar.setHomeButtonEnabled(true);
+    }
 
     // Set up the navigation drawer.
     drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.setStatusBarBackground(R.color.colorPrimaryDark);
 
-    ActionBarDrawerToggle toggle =
+    actionBarDrawerToggle =
         new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close);
-    drawer.addDrawerListener(toggle);
-    toggle.syncState();
+    drawer.addDrawerListener(actionBarDrawerToggle);
+    actionBarDrawerToggle.syncState();
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
@@ -82,7 +88,7 @@ public class EventsActivity extends AppCompatActivity
   }
 
   @SuppressWarnings("StatementWithEmptyBody") @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
+  public boolean onNavigationItemSelected(@NonNull MenuItem item) {
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
@@ -99,9 +105,7 @@ public class EventsActivity extends AppCompatActivity
     } else if (id == R.id.nav_send) {
 
     }
-
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-    drawer.closeDrawer(GravityCompat.START);
+    this.drawer.closeDrawer(GravityCompat.START);
     return true;
   }
 }
