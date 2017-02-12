@@ -23,6 +23,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     this.itemListener = itemListener;
   }
 
+
+
   private void setList(List<Event> events) {
     this.mEvents = events;
   }
@@ -47,6 +49,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
   public Event getItem(int position) {
     return mEvents.get(position);
+  }
+
+  public void refreshData(List<Event> events) {
+    setList(events);
+    notifyDataSetChanged();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

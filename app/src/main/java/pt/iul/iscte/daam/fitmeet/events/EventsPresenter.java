@@ -1,20 +1,48 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
 import android.support.annotation.NonNull;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import pt.iul.iscte.daam.fitmeet.data.Difficulty;
 import pt.iul.iscte.daam.fitmeet.data.Event;
+import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
 
 /**
  * Created by jdandrade on 09/02/2017.
  */
 public class EventsPresenter implements EventsContract.UserActionsListener {
+  private final EventsRepository mEventsRepository;
   private final EventsContract.View mEventsView;
 
-  public EventsPresenter(@NonNull EventsContract.View eventsView) {
+  public EventsPresenter(@NonNull EventsRepository mEventsRepository,
+      @NonNull EventsContract.View eventsView) {
+    this.mEventsRepository = mEventsRepository;
     this.mEventsView = eventsView;
   }
 
-  @Override public void loadEvents() {
+  @Override public void loadEvents(boolean bypassCache) {
+    mEventsView.setProgressIndicator(true);
 
+    if (bypassCache) {
+      mEventsRepository.refreshData();
+    }
+
+    List<Event> events = new ArrayList<>();
+
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, null));
+
+    mEventsView.showEvents(events);
+    mEventsView.setProgressIndicator(false);
+
+    //mEventsRepository.getEvents(new EventsRepository.LoadEventsCallback() {
+    //  @Override public void onEventsLoaded(List<Event> events) {
+    //    mEventsView.setProgressIndicator(false);
+    //    mEventsView.showEvents(events);
+    //  }
+    //});
   }
 
   @Override public void addNewEvent() {

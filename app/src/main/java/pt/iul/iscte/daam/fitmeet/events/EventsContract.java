@@ -16,11 +16,13 @@ public interface EventsContract {
     void showAddEvent();
 
     void showEventDetails(long id);
+
+    void setProgressIndicator(boolean showProgress);
   }
 
   interface UserActionsListener {
 
-    void loadEvents();
+    void loadEvents(boolean bypassCache);
 
     void addNewEvent();
 

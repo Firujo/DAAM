@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.data.Event;
+import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
+import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
+import pt.iul.iscte.daam.fitmeet.data.EventsServiceApiImplementation;
 import pt.iul.iscte.daam.fitmeet.eventdetail.EventDetailActivity;
 
 /**
@@ -41,7 +44,9 @@ public class EventsFragment extends Fragment implements EventsContract.View {
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mActionsListener = new EventsPresenter(this);
+    EventsRepository eventsRepository =
+        EventRepositories.getInMemoryRepoInstance(new EventsServiceApiImplementation());
+    mActionsListener = new EventsPresenter(eventsRepository, this);
     mListAdapter = new EventsAdapter(new ArrayList<Event>(0), mItemListener);
   }
 
@@ -49,6 +54,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.events_list);
+    recyclerView.setAdapter(mListAdapter);
 
     int numColumns = getContext().getResources().getInteger(R.integer.num_events_columns);
 
@@ -72,7 +78,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
         ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        mActionsListener.loadEvents();
+        mActionsListener.loadEvents(true);
       }
     });
 
@@ -80,7 +86,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   }
 
   @Override public void showEvents(List<Event> events) {
-
+    mListAdapter.refreshData(events);
   }
 
   @Override public void showAddEvent() {
@@ -91,6 +97,21 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     Intent intent = new Intent(getContext(), EventDetailActivity.class);
     intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
     startActivity(intent);
+  }
+
+  @Override public void setProgressIndicator(final boolean showProgress) {
+    if (getView() == null) {
+      return;
+    }
+    final SwipeRefreshLayout swipeRefreshLayout =
+        (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
+
+    // Make sure setRefreshing() is called after the layout is done with everything else.
+    swipeRefreshLayout.post(new Runnable() {
+      @Override public void run() {
+        swipeRefreshLayout.setRefreshing(showProgress);
+      }
+    });
   }
 
   public interface EventItemListener {
