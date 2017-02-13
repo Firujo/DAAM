@@ -7,14 +7,14 @@ import java.util.List;
  */
 public interface EventsServiceApi {
 
-  interface EventsServiceCallback<T> {
-
-    void onLoaded(T events);
-  }
-
   void getAllEvents(EventsServiceCallback<List<Event>> callback);
 
   void getEvent(String eventId, EventsServiceCallback<Event> callback);
 
   void saveEvent(Event event);
+
+  interface EventsServiceCallback<T> {
+
+    void onLoaded(T events);
+  }
 }

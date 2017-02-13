@@ -13,6 +13,12 @@ public class EventsServiceApiImplementation implements EventsServiceApi {
   // TODO replace this with a new test specific data set.
   private static final ArrayMap<String, Event> NOTES_SERVICE_DATA = new ArrayMap();
 
+  @VisibleForTesting public static void addEvents(Event... events) {
+    for (Event event : events) {
+      NOTES_SERVICE_DATA.put(String.valueOf(event.getId()), event);
+    }
+  }
+
   @Override public void getAllEvents(EventsServiceCallback<List<Event>> callback) {
     callback.onLoaded(Lists.newArrayList(NOTES_SERVICE_DATA.values()));
   }
@@ -24,11 +30,5 @@ public class EventsServiceApiImplementation implements EventsServiceApi {
 
   @Override public void saveEvent(Event event) {
     NOTES_SERVICE_DATA.put(String.valueOf(event.getId()), event);
-  }
-
-  @VisibleForTesting public static void addEvents(Event... events) {
-    for (Event event : events) {
-      NOTES_SERVICE_DATA.put(String.valueOf(event.getId()), event);
-    }
   }
 }

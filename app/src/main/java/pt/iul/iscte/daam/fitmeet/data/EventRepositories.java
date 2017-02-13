@@ -7,11 +7,11 @@ import android.support.annotation.NonNull;
  */
 
 public class EventRepositories {
+  private static EventsRepository repository = null;
+
   private EventRepositories() {
     // no instance
   }
-
-  private static EventsRepository repository = null;
 
   public synchronized static EventsRepository getInMemoryRepoInstance(
       @NonNull EventsServiceApi notesServiceApi) {

@@ -3,31 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_margin="8dp"
-    >
+    android:layout_margin="8dp">
 
   <LinearLayout
       style="@style/Widget.CardContent"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
-      tools:background="#30888888"
-      >
+      tools:background="#30888888">
 
     <TextView
         android:id="@+id/event_detail_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        tools:text="card title"
-        />
+        tools:text="card title" />
 
     <TextView
         android:id="@+id/event_detail_description"
         style="@android:style/TextAppearance.Small"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
   </LinearLayout>
 </android.support.v7.widget.CardView>

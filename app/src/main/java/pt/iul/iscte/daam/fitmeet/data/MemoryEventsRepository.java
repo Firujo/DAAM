@@ -34,11 +34,6 @@ public class MemoryEventsRepository implements EventsRepository {
     }
   }
 
-  @Override public void saveEvent(@NonNull Event event) {
-    mEventsServiceApi.saveEvent(event);
-    refreshData();
-  }
-
   @Override
   public void getEvent(@NonNull final String noteId, @NonNull final GetEventCallback callback) {
     // Load notes matching the id always directly from the API.
@@ -47,6 +42,11 @@ public class MemoryEventsRepository implements EventsRepository {
         callback.onEventLoaded(note);
       }
     });
+  }
+
+  @Override public void saveEvent(@NonNull Event event) {
+    mEventsServiceApi.saveEvent(event);
+    refreshData();
   }
 
   @Override public void refreshData() {

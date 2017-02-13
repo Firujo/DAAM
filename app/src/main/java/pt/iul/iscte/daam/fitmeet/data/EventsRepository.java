@@ -8,6 +8,14 @@ import java.util.List;
  */
 public interface EventsRepository {
 
+  void getEvents(@NonNull LoadEventsCallback callback);
+
+  void getEvent(@NonNull String eventId, @NonNull GetEventCallback callback);
+
+  void saveEvent(@NonNull Event event);
+
+  void refreshData();
+
   interface LoadEventsCallback {
 
     void onEventsLoaded(List<Event> events);
@@ -17,13 +25,4 @@ public interface EventsRepository {
 
     void onEventLoaded(Event event);
   }
-
-  void getEvents(@NonNull LoadEventsCallback callback);
-
-  void getEvent(@NonNull String eventId, @NonNull GetEventCallback callback);
-
-  void saveEvent(@NonNull Event event);
-
-  void refreshData();
-
 }

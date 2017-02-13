@@ -23,8 +23,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     this.itemListener = itemListener;
   }
 
-
-
   private void setList(List<Event> events) {
     this.mEvents = events;
   }
