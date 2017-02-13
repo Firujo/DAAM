@@ -28,11 +28,7 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
       mEventsRepository.refreshData();
     }
 
-    List<Event> events = new ArrayList<>();
-
-    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
-        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM, null));
+    List<Event> events = getFakeEvents();
 
     mEventsView.showEvents(events);
     mEventsView.setProgressIndicator(false);
@@ -43,6 +39,24 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
     //    mEventsView.showEvents(events);
     //  }
     //});
+  }
+
+  @NonNull private List<Event> getFakeEvents() {
+    List<Event> events = new ArrayList<>();
+
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, null));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, null));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, null));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, null));
+    return events;
   }
 
   @Override public void addNewEvent() {
