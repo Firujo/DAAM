@@ -7,11 +7,13 @@ public class User {
   private final long id;
   private final String name;
   private final String email;
+  private String avatarUrl;
 
-  public User(long id, String name, String email) {
+  public User(long id, String name, String email, String avatarUrl) {
     this.id = id;
     this.name = name;
     this.email = email;
+    this.avatarUrl = avatarUrl;
   }
 
   public long getId() {
@@ -24,5 +26,9 @@ public class User {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getAvatarUrl() {
+    return avatarUrl;
   }
 }

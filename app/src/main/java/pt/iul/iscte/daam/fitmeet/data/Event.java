@@ -11,16 +11,20 @@ public class Event {
   private final String description;
   private final String title;
   private final Date date;
+  private final String location;
   private final String imageUrl;
   private final Enum<Difficulty> difficulty;
   private final User owner;
+  private int numberOfLikes;
 
-  public Event(long id, String description, String title, Date date, String imageUrl,
-      Enum<Difficulty> difficulty, User owner) {
+  public Event(long id, String description, String title, Date date, String location,
+      int numberOfLikes, String imageUrl, Enum<Difficulty> difficulty, User owner) {
     this.id = id;
     this.description = description;
     this.title = title;
     this.date = date;
+    this.location = location;
+    this.numberOfLikes = numberOfLikes;
     this.imageUrl = imageUrl;
     this.difficulty = difficulty;
     this.owner = owner;
@@ -52,5 +56,13 @@ public class Event {
 
   public User getOwner() {
     return owner;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public int getNumberOfLikes() {
+    return numberOfLikes;
   }
 }

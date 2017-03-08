@@ -7,6 +7,7 @@ import java.util.List;
 import pt.iul.iscte.daam.fitmeet.data.Difficulty;
 import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
+import pt.iul.iscte.daam.fitmeet.data.User;
 
 /**
  * Created by jdandrade on 09/02/2017.
@@ -44,18 +45,31 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
   @NonNull private List<Event> getFakeEvents() {
     List<Event> events = new ArrayList<>();
 
-    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM, null));
-    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://smalldata.io/startup/common-files/icons/sdl_logo.png")));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM, null));
-    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg")));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM, null));
-    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(),
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg")));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM, null));
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg")));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg")));
+    events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg")));
+
     return events;
   }
 

@@ -94,9 +94,9 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   }
 
   @Override public void showEventDetails(long eventId) {
-    Intent intent = new Intent(getContext(), EventDetailActivity.class);
-    intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
-    startActivity(intent);
+    //Intent intent = new Intent(getContext(), EventDetailActivity.class);
+    //intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
+    //startActivity(intent);
   }
 
   @Override public void setProgressIndicator(final boolean showProgress) {
