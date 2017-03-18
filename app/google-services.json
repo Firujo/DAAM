@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "935325995921",
+    "firebase_url": "https://fit2gather-e8780.firebaseio.com",
+    "project_id": "fit2gather-e8780",
+    "storage_bucket": "fit2gather-e8780.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935325995921:android:146289f63ed1af21",
+        "android_client_info": {
+          "package_name": "pt.iul.iscte.daam.fitmeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935325995921-4ougva1sihb24tsfe3u8ko01ab73aocs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pt.iul.iscte.daam.fitmeet",
+            "certificate_hash": "125de27ccfb3e1ac000da480fba3dfb0add79cbe"
+          }
+        },
+        {
+          "client_id": "935325995921-v2stcbidd9h6l8dkmpb3i0prbvbnc8o6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxZOvYUPIppVBBuYVnqrt3VjhXTzmeWCQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935325995921-v2stcbidd9h6l8dkmpb3i0prbvbnc8o6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
