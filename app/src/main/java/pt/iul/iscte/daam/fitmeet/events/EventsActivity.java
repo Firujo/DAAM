@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.firebase.FirebaseTestActivity;
 
 /**
  * Created by jdandrade on 09/02/2017.
@@ -93,7 +95,7 @@ public class EventsActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.nav_camera) {
-      // Handle the camera action
+      startActivity(new Intent(EventsActivity.this, FirebaseTestActivity.class));
     } else if (id == R.id.nav_gallery) {
 
     } else if (id == R.id.nav_slideshow) {
