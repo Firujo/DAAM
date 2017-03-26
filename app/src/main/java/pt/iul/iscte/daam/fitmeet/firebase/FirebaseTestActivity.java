@@ -8,7 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.data.Database;
 
 /**
  * Created by jdandrade on 25/03/2017.
@@ -43,6 +48,15 @@ public class FirebaseTestActivity extends AppCompatActivity {
   private void tabordenzTestingFirebase() {
     button.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("message");
+        Database db = new Database("Users");
+        //db.getDatabase().setValue("Hello, World!");
+        db.writeNewUser(1, "Bruno", "boss@b.pt","url");
+        db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");
+        //db.getDatabase().setValue("Hello world!");
+        //db.getDatabase().push();
+
         Toast.makeText(FirebaseTestActivity.this, "BOOP", Toast.LENGTH_SHORT).show();
       }
     });
