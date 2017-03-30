@@ -26,6 +26,8 @@
         android:name="io.fabric.ApiKey"
         android:value="88a08b834bdb2c52231e295aff6554bff62eb250" />
 
+    <activity android:name=".LoginActivity" />
+    <activity android:name=".RegisterActivity"></activity>
   </application>
 
 </manifest>
