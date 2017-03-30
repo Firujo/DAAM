@@ -45,7 +45,12 @@ public class LoginActivity extends AppCompatActivity {
   private void setupListeners() {
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        final String username = usernameEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
 
+        if (validateLogin(username, password)) {
+          tabordaLoginTeste(username, password);
+        }
       }
     });
 
@@ -62,4 +67,18 @@ public class LoginActivity extends AppCompatActivity {
     return true;
   }
 
+  private boolean validateLogin(String username,
+      String password) {//// TODO: apply MVP + discuss login constraints
+    if (!username.isEmpty() && !password.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Metodo po Xô Bruno Taborda
+   */
+  private void tabordaLoginTeste(String username, String password) {
+    //todo taborda test here
+  }
 }
