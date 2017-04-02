@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pt.iul.iscte.daam.fitmeet.account.AccountFragment"
+    >
+
+  <Button
+      android:id="@+id/registerFragmentButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Join Fit2Gather"
+      android:layout_margin="15dp"
+      />
+
+  <Button
+      android:id="@+id/loginFragmentButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/login"
+      android:layout_margin="15dp"
+      />
+
+
+</LinearLayout>
