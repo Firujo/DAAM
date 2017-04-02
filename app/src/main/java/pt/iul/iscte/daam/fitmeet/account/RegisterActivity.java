@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet;
+package pt.iul.iscte.daam.fitmeet.account;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import pt.iul.iscte.daam.fitmeet.R;
 
 /**
  * Created by filipe on 29/03/2017.
