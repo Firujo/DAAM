@@ -2,7 +2,6 @@ package pt.iul.iscte.daam.fitmeet.events;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +17,7 @@ import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
-import pt.iul.iscte.daam.fitmeet.LoginActivity;
+import pt.iul.iscte.daam.fitmeet.account.AccountActivity;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.firebase.FirebaseTestActivity;
 
@@ -98,7 +97,7 @@ public class EventsActivity extends AppCompatActivity
     if (id == R.id.nav_camera) {
       startActivity(new Intent(EventsActivity.this, FirebaseTestActivity.class));
     } else if (id == R.id.nav_gallery) {
-      startActivity(new Intent(EventsActivity.this, LoginActivity.class));
+      startActivity(new Intent(EventsActivity.this, AccountActivity.class));
     } else if (id == R.id.nav_slideshow) {
 
     } else if (id == R.id.nav_manage) {
