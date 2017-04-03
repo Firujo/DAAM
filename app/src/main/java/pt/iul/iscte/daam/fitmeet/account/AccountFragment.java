@@ -3,6 +3,8 @@ package pt.iul.iscte.daam.fitmeet.account;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +24,6 @@ public class AccountFragment extends Fragment {
   public static AccountFragment newInstance() {
     return new AccountFragment();
   }
-
-  //public void onButtonPressed(Uri uri) {
-  //  if (accountFragmentListener != null) {
-  //    accountFragmentListener.onFragmentInteraction(uri);
-  //  }
-  //}
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);
@@ -57,15 +53,32 @@ public class AccountFragment extends Fragment {
   private void setupListeners() {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        accountFragmentListener.onRegisterPressed();
+        initRegisterFragment(RegisterFragment.newInstance());
       }
     });
 
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        accountFragmentListener.onLoginPressed();
+        //accountFragmentListener.onLoginPressed();
+        initLoginFragment(LoginFragment.newInstance());
       }
     });
+  }
+
+  private void initLoginFragment(LoginFragment loginFragment) {
+    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.replace(R.id.accountFrameLayout, loginFragment);
+    transaction.addToBackStack(null);
+    transaction.commit();
+  }
+
+  private void initRegisterFragment(RegisterFragment registerFragment) {
+    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.replace(R.id.accountFrameLayout, registerFragment);
+    transaction.addToBackStack(null);
+    transaction.commit();
   }
 
   public interface AccountFragmentListener {
