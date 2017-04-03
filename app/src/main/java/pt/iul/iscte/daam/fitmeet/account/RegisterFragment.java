@@ -43,6 +43,7 @@ public class RegisterFragment extends Fragment {
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
     passwordConfirmationEditText = (EditText) view.findViewById(R.id.passwordConfirmationEditText);
 
+    setupListener();
     return view;
   }
 
