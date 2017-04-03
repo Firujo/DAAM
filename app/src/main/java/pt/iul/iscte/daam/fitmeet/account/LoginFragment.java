@@ -1,6 +1,5 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import pt.iul.iscte.daam.fitmeet.R;
 
 public class LoginFragment extends Fragment {
@@ -18,27 +16,17 @@ public class LoginFragment extends Fragment {
   private Button loginButton;
   private EditText usernameEditText;
   private EditText passwordEditText;
-  private TextView registerTextView;
 
   private OnFragmentInteractionListener mListener;
 
   public LoginFragment() {
   }
 
-  public static LoginFragment newInstance(String param1, String param2) {
+  public static LoginFragment newInstance() {
     LoginFragment fragment = new LoginFragment();
     return fragment;
   }
 
-  @Override public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof OnFragmentInteractionListener) {
-      mListener = (OnFragmentInteractionListener) context;
-    } else {
-      throw new RuntimeException(
-          context.toString() + " must implement OnFragmentInteractionListener");
-    }
-  }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,8 +39,8 @@ public class LoginFragment extends Fragment {
     loginButton = (Button) view.findViewById(R.id.loginButton);
     usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
-    registerTextView = (TextView) view.findViewById(R.id.registerTextView);
 
+    setupListeners();
     return view;
   }
 
@@ -82,6 +70,7 @@ public class LoginFragment extends Fragment {
    */
   private void tabordaLoginTeste(String username, String password) {
     //todo taborda test here
+    System.out.println("testing login with : " + username + " ; " + password);
   }
 
   public interface OnFragmentInteractionListener {
