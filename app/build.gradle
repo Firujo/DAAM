@@ -11,6 +11,8 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
@@ -39,6 +41,10 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -59,6 +65,10 @@ dependencies {
   compile 'com.android.support.test.espresso:espresso-core:2.2.2'
   compile 'com.android.support.constraint:constraint-layout:1.0.1'
   compile 'com.google.firebase:firebase-database:10.0.1'
+  compile 'io.reactivex:rxandroid:1.2.1'
+// Because RxAndroid releases are few and far between, it is recommended you also
+// explicitly depend on RxJava's latest version for bug fixes and new features.
+  compile 'io.reactivex:rxjava:1.2.7'
   testCompile 'junit:junit:4.12'
 }
 
