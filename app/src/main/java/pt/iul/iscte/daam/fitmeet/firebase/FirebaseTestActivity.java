@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.data.FirebaseDatabase;
+import pt.iul.iscte.daam.fitmeet.data.FireBDatabase;
 
 /**
  * Created by jdandrade on 25/03/2017.
@@ -46,7 +46,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
       @Override public void onClick(View view) {
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("message");
-        FirebaseDatabase db = new FirebaseDatabase("Users");
+        FireBDatabase db = new FireBDatabase("Users");
         //db.getDatabase().setValue("Hello, World!");
         db.writeNewUser(1, "Bruno", "boss@b.pt","url");
         db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");
