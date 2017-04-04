@@ -4,16 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.data.Database;
+import pt.iul.iscte.daam.fitmeet.data.FirebaseDatabase;
 
 /**
  * Created by jdandrade on 25/03/2017.
@@ -50,7 +46,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
       @Override public void onClick(View view) {
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("message");
-        Database db = new Database("Users");
+        FirebaseDatabase db = new FirebaseDatabase("Users");
         //db.getDatabase().setValue("Hello, World!");
         db.writeNewUser(1, "Bruno", "boss@b.pt","url");
         db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");

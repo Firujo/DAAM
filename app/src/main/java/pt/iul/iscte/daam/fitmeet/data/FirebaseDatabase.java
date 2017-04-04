@@ -10,12 +10,12 @@ import java.util.Map;
  * Created by Bruno on 18/03/2017.
  */
 
-public class Database {
+public class FirebaseDatabase {
 
     private DatabaseReference database;
 
-    public Database(String ref){
-        FirebaseDatabase databaseFirebase = FirebaseDatabase.getInstance();
+    public FirebaseDatabase(String ref){
+        com.google.firebase.database.FirebaseDatabase databaseFirebase = com.google.firebase.database.FirebaseDatabase.getInstance();
         database = databaseFirebase.getReference(ref);
     }
 
