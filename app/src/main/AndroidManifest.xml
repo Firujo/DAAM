@@ -26,6 +26,11 @@
         android:name="io.fabric.ApiKey"
         android:value="88a08b834bdb2c52231e295aff6554bff62eb250" />
 
+    <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id" />
+
+
     <activity android:name=".account.AccountActivity"></activity>
   </application>
 
