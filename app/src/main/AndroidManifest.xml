@@ -30,6 +30,10 @@
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/facebook_app_id" />
 
+    <provider
+        android:authorities="com.facebook.app.FacebookContentProvider2060002854226284"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
 
     <activity android:name=".account.AccountActivity"></activity>
   </application>
