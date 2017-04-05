@@ -49,7 +49,16 @@ public class LoginFragment extends Fragment {
       public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-          System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+          if (user.isEmailVerified()) {
+            System.out.println("Email is verified");
+            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+            System.out.println(user.getDisplayName());
+          }
+          else {
+            user.sendEmailVerification();
+            System.out.println("Email is not verified");
+          }
+
         } else {
           System.out.println("onAuthStateChanged:signed_out");
         }
