@@ -31,7 +31,7 @@
         android:value="@string/facebook_app_id" />
 
     <provider
-        android:authorities="com.facebook.app.FacebookContentProvider2060002854226284"
+        android:authorities="com.facebook.app.FacebookContentProvider1837997173091681"
         android:name="com.facebook.FacebookContentProvider"
         android:exported="true" />
 
