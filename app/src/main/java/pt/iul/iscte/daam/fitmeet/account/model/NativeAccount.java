@@ -63,7 +63,7 @@ public final class NativeAccount implements Account {
   }
 
   @Override public String toString() {
-    return "AptoideAccount{"
+    return "Account{"
         + "id='"
         + id
         + '\''
