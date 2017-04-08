@@ -1,7 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account.model;
 
 import com.facebook.login.LoginManager;
-import pt.iul.iscte.daam.fitmeet.account.model.Account;
 import rx.Completable;
 
 public class FacebookAccount implements Account {
