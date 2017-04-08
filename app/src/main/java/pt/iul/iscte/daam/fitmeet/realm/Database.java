@@ -21,8 +21,8 @@ import java.util.List;
 public final class Database {
 
 
-    private static final int SCHEMA_VERSION = 8081; // if you bump this value, also add changes to the
-    private static final String DB_NAME = "aptoide.realm.db";
+    private static final int SCHEMA_VERSION = 8000; // if you bump this value, also add changes to the
+    private static final String DB_NAME = "fitgather.realm.db";
 
     private static boolean isInitialized = false;
 

@@ -10,14 +10,14 @@ public class AccountFactory {
 
   public Account createAccount(String id, String name, String nickname, String avatar,
       String password, Account.Type type) {
-    final Account aptoideAccount = new NativeAccount(id, name, nickname, avatar, password, type);
+    final Account fit2gatherAccount = new NativeAccount(id, name, nickname, avatar, password, type);
     switch (type) {
       case FIT2GATHER:
-        return aptoideAccount;
+        return fit2gatherAccount;
       case FACEBOOK:
-        return externalAccountFactory.createFacebookAccount(aptoideAccount);
+        return externalAccountFactory.createFacebookAccount(fit2gatherAccount);
       case GOOGLE:
-        return externalAccountFactory.createGoogleAccount(aptoideAccount);
+        return externalAccountFactory.createGoogleAccount(fit2gatherAccount);
       default:
         throw new IllegalArgumentException("Illegal account type " + type);
     }

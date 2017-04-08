@@ -5,7 +5,6 @@
 
 package pt.iul.iscte.daam.fitmeet.account.model;
 
-import pt.iul.iscte.daam.fitmeet.account.model.Account;
 import rx.Completable;
 
 public final class NativeAccount implements Account {
@@ -64,7 +63,7 @@ public final class NativeAccount implements Account {
   }
 
   @Override public String toString() {
-    return "AptoideAccount{"
+    return "Account{"
         + "id='"
         + id
         + '\''

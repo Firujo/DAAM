@@ -1,6 +1,5 @@
 package pt.iul.iscte.daam.fitmeet.account.model;
 
-import pt.iul.iscte.daam.fitmeet.account.model.Account;
 import rx.Completable;
 
 public class LocalAccount implements Account {
