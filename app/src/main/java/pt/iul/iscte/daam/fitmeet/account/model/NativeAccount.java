@@ -3,8 +3,9 @@
  * Modified by Marcelo Benites on 10/02/2017.
  */
 
-package pt.iul.iscte.daam.fitmeet.account;
+package pt.iul.iscte.daam.fitmeet.account.model;
 
+import pt.iul.iscte.daam.fitmeet.account.model.Account;
 import rx.Completable;
 
 public final class NativeAccount implements Account {
