@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by filipe on 08-04-2017.
  */
 
-public class ActivityView extends AppCompatActivity {
+public class View extends AppCompatActivity {
 
   private Presenter presenter;
 
