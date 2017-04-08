@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.iul.iscte.daam.fitmeet">
 
+  <uses-permission
+      android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+      android:maxSdkVersion="22" />
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
   <uses-permission android:name="android.permission.INTERNET" />
+
+  <uses-permission
+      android:name="android.permission.MANAGE_ACCOUNTS"
+      android:maxSdkVersion="22" />
 
   <application
       android:allowBackup="true"
@@ -31,11 +39,11 @@
         android:value="@string/facebook_app_id" />
 
     <provider
-        android:authorities="com.facebook.app.FacebookContentProvider1837997173091681"
         android:name="com.facebook.FacebookContentProvider"
+        android:authorities="com.facebook.app.FacebookContentProvider1837997173091681"
         android:exported="true" />
 
-    <activity android:name=".account.AccountActivity"></activity>
+    <activity android:name=".account.AccountActivity" />
   </application>
 
 </manifest>
