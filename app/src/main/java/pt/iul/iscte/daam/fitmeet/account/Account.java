@@ -45,6 +45,13 @@ public interface Account {
   String getPassword();
 
   /**
+   * Returns account's type.
+   *
+   * @see Type
+   */
+  Account.Type getType();
+
+  /**
    * Account type.
    */
   public enum Type {

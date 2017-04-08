@@ -38,4 +38,8 @@ public class FacebookAccount implements Account {
   @Override public String getPassword() {
     return account.getPassword();
   }
+
+  @Override public Type getType() {
+    return Type.FACEBOOK;
+  }
 }
