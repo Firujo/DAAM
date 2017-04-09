@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.login.widget.LoginButton;
 
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
@@ -20,6 +22,8 @@ public class LoginFragment extends FragmentView implements LoginView {
   private Button loginButton;
   private EditText usernameEditText;
   private EditText passwordEditText;
+  private LoginButton facebookLoginButton;
+
 
   private LoginPresenter loginPresenter;
   private OnFragmentInteractionListener mListener;
@@ -33,7 +37,6 @@ public class LoginFragment extends FragmentView implements LoginView {
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
   }
 
@@ -50,6 +53,9 @@ public class LoginFragment extends FragmentView implements LoginView {
     usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
 
+    facebookLoginButton = (LoginButton) view.findViewById(R.id.facebook_login_button);
+    facebookLoginButton.setReadPermissions("email");
+    facebookLoginButton.setFragment(this);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class LoginFragment extends FragmentView implements LoginView {
     loginPresenter = new LoginPresenter(this, appLoginManager);
     attachPresenter(loginPresenter);
     super.onViewCreated(view, savedInstanceState);
+
   }
 
   @Override
