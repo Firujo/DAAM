@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +13,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
@@ -24,7 +31,7 @@ public class LoginFragment extends FragmentView implements LoginView {
   private EditText passwordEditText;
   private LoginButton facebookLoginButton;
 
-
+  private FirebaseAuth firebaseAuth;
   private LoginPresenter loginPresenter;
   private OnFragmentInteractionListener mListener;
 
@@ -37,6 +44,8 @@ public class LoginFragment extends FragmentView implements LoginView {
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
+    FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+    firebaseAuth = FirebaseAuth.getInstance();
     super.onCreate(savedInstanceState);
   }
 
@@ -54,13 +63,15 @@ public class LoginFragment extends FragmentView implements LoginView {
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
 
     facebookLoginButton = (LoginButton) view.findViewById(R.id.facebook_login_button);
-    facebookLoginButton.setReadPermissions("email");
+    facebookLoginButton.setReadPermissions("email", "public_profile");
     facebookLoginButton.setFragment(this);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    AppLoginManager appLoginManager = new AppLoginManager();
-    loginPresenter = new LoginPresenter(this, appLoginManager);
+    AppLoginManager appLoginManager = new AppLoginManager(firebaseAuth);
+    FacebookLoginManager facebookLoginManager = new FacebookLoginManager(firebaseAuth);
+
+    loginPresenter = new LoginPresenter(this, appLoginManager, facebookLoginManager);
     attachPresenter(loginPresenter);
     super.onViewCreated(view, savedInstanceState);
 
@@ -95,6 +106,11 @@ public class LoginFragment extends FragmentView implements LoginView {
     if (error == AppLoginManager.EMPTY_FIELDS) {
       Toast.makeText(getActivity(), R.string.empty_fields, Toast.LENGTH_SHORT).show();
     }
+  }
+
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    loginPresenter.onActivityResult(requestCode, resultCode, data);
   }
 
   public interface OnFragmentInteractionListener {

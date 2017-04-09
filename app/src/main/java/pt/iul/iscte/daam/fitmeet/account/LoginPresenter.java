@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.content.Intent;
 import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 
 /**
@@ -10,10 +11,13 @@ public class LoginPresenter implements FragmentPresenter {
 
   private LoginView view;
   private AppLoginManager appLoginManager;
+  private FacebookLoginManager facebookLoginManager;
 
-  public LoginPresenter(LoginView view, AppLoginManager appLoginManager) {
+  public LoginPresenter(LoginView view, AppLoginManager appLoginManager,
+      FacebookLoginManager facebookLoginManager) {
     this.view = view;
     this.appLoginManager = appLoginManager;
+    this.facebookLoginManager = facebookLoginManager;
   }
 
   @Override public void onCreateView() {
@@ -21,7 +25,7 @@ public class LoginPresenter implements FragmentPresenter {
   }
 
   @Override public void onViewCreated() {
-    appLoginManager.initializeAuth();
+    facebookLoginManager.initializeLoginControls();
   }
 
   @Override public void onCreate() {
@@ -36,15 +40,26 @@ public class LoginPresenter implements FragmentPresenter {
   }
 
   @Override public void onDestroy() {
-
+    appLoginManager.stop();
   }
 
   @Override public void onStop() {
-    appLoginManager.removeAuthListener();
+    appLoginManager.stop();
   }
 
   @Override public void onStart() {
     appLoginManager.setupAuthListener();
+    facebookLoginManager.setupFacebookCallback(
+        new FacebookLoginManager.FacebookLoginStatusListener() {
+
+          @Override public void onSuccess() {
+            System.out.println("success facebook");
+          }
+
+          @Override public void onError(int error) {
+            System.out.println("error");
+          }
+        });
   }
 
   public void pressedLogin(String username, String password) {
@@ -58,5 +73,9 @@ public class LoginPresenter implements FragmentPresenter {
         view.showErrorToast(error);
       }
     });
+  }
+
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    facebookLoginManager.onResult(requestCode, resultCode, data);
   }
 }
