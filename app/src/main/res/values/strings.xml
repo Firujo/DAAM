@@ -13,5 +13,7 @@
   <string name="register_now">Register now</string>
   <string name="sign_up">Sign up</string>
   <string name="my_account">My Account</string>
+  <string name="successful_login">Successful login</string>
+  <string name="empty_fields">Can not leave empty fields.</string>
 
 </resources>
