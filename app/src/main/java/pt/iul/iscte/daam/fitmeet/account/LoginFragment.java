@@ -1,9 +1,9 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +12,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends FragmentView implements LoginView {
 
   private Button loginButton;
   private EditText usernameEditText;
   private EditText passwordEditText;
+  private LoginButton facebookLoginButton;
 
-  private FirebaseAuth mAuth;
-  private FirebaseAuth.AuthStateListener mAuthListener;
-
+  private FirebaseAuth firebaseAuth;
+  private LoginPresenter loginPresenter;
   private OnFragmentInteractionListener mListener;
 
   public LoginFragment() {
@@ -39,58 +43,48 @@ public class LoginFragment extends Fragment {
     return fragment;
   }
 
-
   @Override public void onCreate(Bundle savedInstanceState) {
-
-    mAuth = FirebaseAuth.getInstance();
-
-    mAuthListener = new FirebaseAuth.AuthStateListener() {
-      @Override
-      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-          if (user.isEmailVerified()) {
-            System.out.println("Email is verified");
-            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-            System.out.println(user.getDisplayName());
-          }
-          else {
-            user.sendEmailVerification();
-            System.out.println("Email is not verified");
-          }
-
-        } else {
-          System.out.println("onAuthStateChanged:signed_out");
-        }
-      }
-    };
+    FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+    firebaseAuth = FirebaseAuth.getInstance();
     super.onCreate(savedInstanceState);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_login, container, false);
+    bindViews(view);
+    setupListeners();
+    return view;
+  }
 
+  private void bindViews(View view) {
     loginButton = (Button) view.findViewById(R.id.loginButton);
     usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
 
-    setupListeners();
-    return view;
+    facebookLoginButton = (LoginButton) view.findViewById(R.id.facebook_login_button);
+    facebookLoginButton.setReadPermissions("email", "public_profile");
+    facebookLoginButton.setFragment(this);
+  }
+
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    AppLoginManager appLoginManager = new AppLoginManager(firebaseAuth);
+    FacebookLoginManager facebookLoginManager = new FacebookLoginManager(firebaseAuth);
+
+    loginPresenter = new LoginPresenter(this, appLoginManager, facebookLoginManager);
+    attachPresenter(loginPresenter);
+    super.onViewCreated(view, savedInstanceState);
+
   }
 
   @Override
   public void onStart() {
     super.onStart();
-    mAuth.addAuthStateListener(mAuthListener);
   }
 
   @Override
   public void onStop() {
     super.onStop();
-    if (mAuthListener != null) {
-      mAuth.removeAuthStateListener(mAuthListener);
-    }
   }
 
   private void setupListeners() {
@@ -99,50 +93,24 @@ public class LoginFragment extends Fragment {
         final String username = usernameEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
 
-        if (validateLogin(username, password)) {
-          tabordaLoginTeste(username, password);
-        }
+        loginPresenter.pressedLogin(username, password);
       }
     });
   }
 
-  private boolean validateLogin(String username,
-      String password) {//// TODO: apply MVP + discuss login constraints
-    if (!username.isEmpty() && !password.isEmpty()) {
-      return true;
-    }
-    return false;
+  @Override public void showLoginSuccessfulToast() {
+    Toast.makeText(getActivity(), R.string.successful_login, Toast.LENGTH_SHORT).show();
   }
 
-  /**
-   * Metodo po Xô Bruno Taborda
-   */
-  private void tabordaLoginTeste(String username, String password) {
-    //todo taborda test here
-    System.out.println("testing login with : " + username + " ; " + password);
+  @Override public void showErrorToast(int error) {
+    if (error == AppLoginManager.EMPTY_FIELDS) {
+      Toast.makeText(getActivity(), R.string.empty_fields, Toast.LENGTH_SHORT).show();
+    }
+  }
 
-    mAuth.signInWithEmailAndPassword(username, password)
-            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-              @Override
-              public void onComplete(@NonNull Task<AuthResult> task) {
-                System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
-
-                // If sign in fails, display a message to the user. If sign in succeeds
-                // the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
-                if (!task.isSuccessful()) {
-                  System.out.println("signInWithEmail:failed" + task.getException());
-                  Toast.makeText(getActivity(), "Email or password is invalid",
-                          Toast.LENGTH_SHORT).show();
-                }
-                else{
-                  Toast.makeText(getActivity(), "Login com sucesso",
-                          Toast.LENGTH_SHORT).show();
-                }
-
-                // ...
-              }
-            });
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    loginPresenter.onActivityResult(requestCode, resultCode, data);
   }
 
   public interface OnFragmentInteractionListener {
