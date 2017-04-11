@@ -53,6 +53,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
     ValueEventListener userListener = new ValueEventListener() {
       @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
+          //Test para a key 1 dos users
           User user = dataSnapshot.child("1").getValue(User.class);
           Toast.makeText(FirebaseTestActivity.this, user.getEmail() + " " + user.getName()+" ", Toast.LENGTH_SHORT).show();
          if (user != null) {
