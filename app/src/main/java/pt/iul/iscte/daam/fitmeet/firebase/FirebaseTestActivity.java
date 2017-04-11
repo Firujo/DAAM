@@ -14,8 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.data.Difficulty;
 import pt.iul.iscte.daam.fitmeet.data.FireBDatabase;
 import pt.iul.iscte.daam.fitmeet.data.User;
 
@@ -55,8 +57,9 @@ public class FirebaseTestActivity extends AppCompatActivity {
       public void onDataChange(DataSnapshot dataSnapshot) {
           //Test para a key 1 dos users
           User user = dataSnapshot.child("1").getValue(User.class);
-          Toast.makeText(FirebaseTestActivity.this, user.getEmail() + " " + user.getName()+" ", Toast.LENGTH_SHORT).show();
-         if (user != null) {
+          if (user != null) {
+            Toast.makeText(FirebaseTestActivity.this, user.getEmail() + " " + user.getName()+" ", Toast.LENGTH_SHORT).show();
+
               System.out.println(user);
           }
       }
@@ -89,6 +92,8 @@ public class FirebaseTestActivity extends AppCompatActivity {
         db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");
         //db.getDatabase().setValue("Hello world!");
         //db.getDatabase().push()
+          db = new FireBDatabase("Events");
+          db.newEvent(1, "Correr com os patos faz bem.", "Corrida dos patos", new Date(), "Mafra", 2, "none", Difficulty.ADVANCED, new User(1, "Bruno", "boss@b.pt","url"));
 
         Toast.makeText(FirebaseTestActivity.this, "BOOP", Toast.LENGTH_SHORT).show();
       }

@@ -29,9 +29,9 @@ public class FireBDatabase {
         database.child(Long.toString(id)).setValue(newUser);
     }
 
-    public void newEvent(long id, String description, String title, String graphicURL, int difficulty, Date date, int numberOfUsers, String location) {
-
-
+    public void newEvent(long id, String description, String title, Date date, String location, int numberOfLikes, String graphicURL, Enum<Difficulty> difficulty, User owner) {
+        Event newEvent = new Event(id, description, title,date,location, numberOfLikes ,graphicURL, difficulty, owner);
+        database.child(Long.toString(id)).setValue(newEvent);
     }
 
 
