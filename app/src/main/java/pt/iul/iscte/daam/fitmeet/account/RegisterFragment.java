@@ -3,7 +3,7 @@ package pt.iul.iscte.daam.fitmeet.account;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends FragmentView implements RegisterView {
 
   private Button registerButton;
   private EditText nameEditText;
@@ -33,6 +34,8 @@ public class RegisterFragment extends Fragment {
   private FirebaseAuth mAuth;
   private FirebaseAuth.AuthStateListener mAuthListener;
 
+  private RegisterPresenter presenter;
+
   public static RegisterFragment newInstance() {
     RegisterFragment fragment = new RegisterFragment();
     return fragment;
@@ -43,30 +46,30 @@ public class RegisterFragment extends Fragment {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     mAuth = FirebaseAuth.getInstance();
-
-    mAuthListener = new FirebaseAuth.AuthStateListener() {
-      @Override
-      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-          if (user.isEmailVerified()) {
-            System.out.println("Email is verified");
-            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-          }
-          else {
-            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(nameEditText.getText().toString())
-                    .build();
-            user.updateProfile(profileUpdates);
-            user.sendEmailVerification();
-            System.out.println("Email is not verified");
-          }
-
-        } else {
-          System.out.println("onAuthStateChanged:signed_out");
-        }
-      }
-    };
+    //
+    //mAuthListener = new FirebaseAuth.AuthStateListener() {
+    //  @Override
+    //  public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    //    FirebaseUser user = firebaseAuth.getCurrentUser();
+    //    if (user != null) {
+    //      if (user.isEmailVerified()) {
+    //        System.out.println("Email is verified");
+    //        System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+    //      }
+    //      else {
+    //        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+    //                .setDisplayName(nameEditText.getText().toString())
+    //                .build();
+    //        user.updateProfile(profileUpdates);
+    //        user.sendEmailVerification();
+    //        System.out.println("Email is not verified");
+    //      }
+    //
+    //    } else {
+    //      System.out.println("onAuthStateChanged:signed_out");
+    //    }
+    //  }
+    //};
 
     super.onCreate(savedInstanceState);
   }
@@ -74,15 +77,15 @@ public class RegisterFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
-    mAuth.addAuthStateListener(mAuthListener);
+    //mAuth.addAuthStateListener(mAuthListener);
   }
 
   @Override
   public void onStop() {
     super.onStop();
-    if (mAuthListener != null) {
-      mAuth.removeAuthStateListener(mAuthListener);
-    }
+    //if (mAuthListener != null) {
+    //  mAuth.removeAuthStateListener(mAuthListener);
+    //}
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,16 +93,21 @@ public class RegisterFragment extends Fragment {
 
     View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-    registerButton = (Button) view.findViewById(R.id.registerButton);
-    nameEditText = (EditText) view.findViewById(R.id.nameEditText);
-    usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
-    passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
-    passwordConfirmationEditText = (EditText) view.findViewById(R.id.passwordConfirmationEditText);
+    bindViews(view);
 
     setupListener();
     return view;
   }
 
+  private void bindViews(View view) {
+    registerButton = (Button) view.findViewById(R.id.registerButton);
+    nameEditText = (EditText) view.findViewById(R.id.nameEditText);
+    usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
+    passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
+    passwordConfirmationEditText = (EditText) view.findViewById(R.id.passwordConfirmationEditText);
+  }
+
+  //// TODO: 01-05-2017  ver v8 phoneinputfragment
   private void setupListener() {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -108,52 +116,31 @@ public class RegisterFragment extends Fragment {
         final String password = passwordEditText.getText().toString();
         final String passwordConfirmation = passwordConfirmationEditText.getText().toString();
 
-        if (validateRegister(name, username, password, passwordConfirmation)) {
-          //TODO : Taborda make regist call here.
-          tabordaTestRegister(name, username, password);
-        }
+        presenter.pressedRegister(name, username, password, passwordConfirmation);
       }
     });
   }
 
-  private boolean validateRegister(String name, String username, String password,
-      String passwordConfirmation) {//todo apply MVP + discuss verifications
-    if (name.isEmpty()) {
-      return false;
-    } else if (username.isEmpty()) {
-      return false;
-    } else if (password.isEmpty()) {
-      return false;
-    } else if (passwordConfirmation.isEmpty()) {
-      return false;
-    } else if (!password.equals(passwordConfirmation)) {
-      return false;
-    }
-    return true;
+  @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+    presenter =
+        new RegisterPresenter(this, new RegisterManager(new RegisterCredentialsValidator()));
+    attachPresenter(presenter);
+
+    super.onViewCreated(view, savedInstanceState);
+
   }
 
-  /**
-   * Metodo po Xôr Bruno Taborda testar o registo
-   */
-  private void tabordaTestRegister(String name, String username, String password) {
-    //// TODO: Taborda test registo here
-      mAuth.createUserWithEmailAndPassword(username, password)
-              .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                  System.out.println("createUserWithEmail:onComplete:" + task.isSuccessful());
+  @Override public void showInvalidInputsMessage() {
+    Toast.makeText(getContext(), "Invalid fields, please correct them", Toast.LENGTH_SHORT).show();
+  }
 
-                  // If sign in fails, display a message to the user. If sign in succeeds
-                  // the auth state listener will be notified and logic to handle the
-                  // signed in user can be handled in the listener.
-                  if (!task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Login falhado",
-                            Toast.LENGTH_SHORT).show();
-                  }
+  @Override public void successfulRegistration() {
+    Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
+  }
 
-                  // ...
-                }
-              });
+  @Override public void showUnsuccessfulRegistration() {
+    Toast.makeText(getContext(), "Unexpected error, please try again", Toast.LENGTH_SHORT).show();
   }
 
   public interface OnFragmentInteractionListener {
