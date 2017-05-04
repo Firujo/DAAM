@@ -15,5 +15,6 @@
   <string name="my_account">My Account</string>
   <string name="successful_login">Successful login</string>
   <string name="empty_fields">Can not leave empty fields.</string>
+  <string name="new_event">Create Event</string>
 
 </resources>
