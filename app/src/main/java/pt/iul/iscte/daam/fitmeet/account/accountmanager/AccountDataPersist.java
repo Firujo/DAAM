@@ -6,9 +6,9 @@ import rx.Single;
 
 public interface AccountDataPersist {
 
-  Completable saveAccount(Account account);
+  void saveAccount(Account account);
 
-  Single<Account> getAccount();
+  Account getAccount();
 
-  Completable removeAccount();
+  void removeAccount();
 }

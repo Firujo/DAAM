@@ -1,7 +1,5 @@
 package pt.iul.iscte.daam.fitmeet.account.accountmanager;
 
-import rx.Completable;
-
 public class CredentialsValidator {
   /**
    * Returns true if email and password are not empty. If validate password content is enable
@@ -11,23 +9,17 @@ public class CredentialsValidator {
    * @param password to be validated.
    * @param validatePassword whether password content should be validated.
    */
-  public Completable validate(String email, String password, boolean validatePassword) {
-    return Completable.defer(() -> {
-      if (isEmpty(email) && isEmpty(password)) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.EMPTY_EMAIL_AND_PASSWORD));
-      } else if (isEmpty(password)) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.EMPTY_PASSWORD));
-      } else if (isEmpty(email)) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.EMPTY_EMAIL));
-      } else if (validatePassword && (password.length() < 8 || !has1number1letter(password))) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.INVALID_PASSWORD));
-      }
-      return Completable.complete();
-    });
+  public void validate(String email, String password, boolean validatePassword)
+      throws AccountValidationException {
+    if (isEmpty(email) && isEmpty(password)) {
+      throw new AccountValidationException(AccountValidationException.EMPTY_EMAIL_AND_PASSWORD);
+    } else if (isEmpty(password)) {
+      throw new AccountValidationException(AccountValidationException.EMPTY_PASSWORD);
+    } else if (isEmpty(email)) {
+      throw new AccountValidationException(AccountValidationException.EMPTY_EMAIL);
+    } else if (validatePassword && (password.length() < 8 || !has1number1letter(password))) {
+      throw new AccountValidationException(AccountValidationException.INVALID_PASSWORD);
+    }
   }
 
   private boolean has1number1letter(String password) {

@@ -7,14 +7,10 @@ package pt.iul.iscte.daam.fitmeet.account.accountmanager;
 
 import android.text.TextUtils;
 import com.jakewharton.rxrelay.PublishRelay;
-import java.net.SocketTimeoutException;
 import pt.iul.iscte.daam.fitmeet.account.model.Account;
 import pt.iul.iscte.daam.fitmeet.account.model.AccountFactory;
 import pt.iul.iscte.daam.fitmeet.account.model.ExternalAccountFactory;
 import pt.iul.iscte.daam.fitmeet.account.model.LocalAccount;
-import rx.Completable;
-import rx.Observable;
-import rx.Single;
 
 public class FIT2GatherAccountManager {
 
@@ -34,14 +30,13 @@ public class FIT2GatherAccountManager {
     this.accountRelay = accountRelay;
   }
 
-  public Observable<Account> accountStatus() {
-    return Observable.merge(accountRelay, dataPersist.getAccount().onErrorReturn(throwable -> {
-      return createLocalAccount();
-    }).toObservable());
+  public Account accountStatus() {
+    return dataPersist.getAccount();
+    //return createLocalAccount();
   }
 
-  private Single<Account> singleAccountStatus() {
-    return accountStatus().first().toSingle();
+  private Account singleAccountStatus() {
+    return accountStatus();
   }
 
   private Account createLocalAccount() {
@@ -64,38 +59,35 @@ public class FIT2GatherAccountManager {
    * @return user Account
    */
   @Deprecated public Account getAccount() {
-    return singleAccountStatus().onErrorReturn(throwable -> null).toBlocking().value();
+    return singleAccountStatus();
   }
 
-  public Completable logout() {
-    return singleAccountStatus().flatMapCompletable(
-        account -> account.logout().andThen(removeAccount()));
+  public void logout() {
+    singleAccountStatus().logout();
+    removeAccount();
   }
 
-  public Completable removeAccount() {
-    return dataPersist.removeAccount().doOnCompleted(() -> accountRelay.call(createLocalAccount()));
+  public void removeAccount() {
+    dataPersist.removeAccount();
   }
 
-  private Completable saveAccount(Account account) {
-    return dataPersist.saveAccount(account).doOnCompleted(() -> accountRelay.call(account));
+  private void saveAccount(Account account) {
+    dataPersist.saveAccount(account);
   }
 
-  public Completable signUp(String email, String password) {
-    return credentialsValidator.validate(email, password, true)
-        .andThen(accountManagerService.createAccount(email, password))
-        .andThen(login(Account.Type.FIT2GATHER, email, password, null))
-        .onErrorResumeNext(throwable -> {
-          if (throwable instanceof SocketTimeoutException) {
-            return login(Account.Type.FIT2GATHER, email, password, null);
-          }
-          return Completable.error(throwable);
-        });
+  public void signUp(String email, String password) {
+    try {
+      credentialsValidator.validate(email, password, true);
+    } catch (AccountValidationException e) {
+      return;
+    }
+    accountManagerService.createAccount(email, password);
+    login(Account.Type.FIT2GATHER, email, password, null);
   }
 
-  public Completable login(Account.Type type, final String email, final String password,
+  public void login(Account.Type type, final String email, final String password,
       final String name) {
     // TODO: 08/04/2017
-    return Completable.complete();
   }
 
   /**
@@ -108,18 +100,14 @@ public class FIT2GatherAccountManager {
     return account == null ? null : account.getEmail();
   }
 
-  public Completable updateAccount(String nickname, String avatarPath) {
-    return singleAccountStatus().flatMapCompletable(account -> {
-      if (TextUtils.isEmpty(nickname) && TextUtils.isEmpty(avatarPath)) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.EMPTY_NAME_AND_AVATAR));
-      } else if (TextUtils.isEmpty(nickname)) {
-        return Completable.error(
-            new AccountValidationException(AccountValidationException.EMPTY_NAME));
-      }
-      return accountManagerService.updateAccount(account.getEmail(), nickname,
-          account.getPassword(), TextUtils.isEmpty(avatarPath) ? "" : avatarPath);
-    });
+  public void updateAccount(String nickname, String avatarPath) throws AccountValidationException {
+    if (TextUtils.isEmpty(nickname) && TextUtils.isEmpty(avatarPath)) {
+      throw new AccountValidationException(AccountValidationException.EMPTY_NAME_AND_AVATAR);
+    } else if (TextUtils.isEmpty(nickname)) {
+      throw new AccountValidationException(AccountValidationException.EMPTY_NAME);
+    }
+    accountManagerService.updateAccount(singleAccountStatus().getEmail(), nickname,
+        singleAccountStatus().getPassword(), TextUtils.isEmpty(avatarPath) ? "" : avatarPath);
   }
 
   public static class Builder {
