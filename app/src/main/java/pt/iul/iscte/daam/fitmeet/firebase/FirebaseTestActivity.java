@@ -28,7 +28,8 @@ import pt.iul.iscte.daam.fitmeet.data.User;
 public class FirebaseTestActivity extends AppCompatActivity {
 
   private Button button;
-    private DatabaseReference mUserReference;
+  private Button buttonCipras;
+  private DatabaseReference mUserReference;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
     setupViews();
     tabordenzTestingFirebase();
+    ciprasTest();
 
       mUserReference = new FireBDatabase("Users").getDatabase();
 
@@ -76,6 +78,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
   private void setupViews() {
     button = (Button) findViewById(R.id.firebase_button);
+    buttonCipras = (Button) findViewById(R.id.firebase_cipras);
   }
 
   /**
@@ -88,14 +91,36 @@ public class FirebaseTestActivity extends AppCompatActivity {
         //DatabaseReference myRef = database.getReference("message");
         FireBDatabase db = new FireBDatabase("Users");
         //db.getDatabase().setValue("Hello, World!");
-        db.writeNewUser(1, "Bruno", "boss@b.pt","url");
-        db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");
+        db.writeNewUser(1, "patoide", "patoadsdaside@b.pt","url");
+        db.writeNewUser(2, "Bsaddasdsadsaruno1", "bosasdaasddassddass@b.pt1","url1");
         //db.getDatabase().setValue("Hello world!");
         //db.getDatabase().push()
           db = new FireBDatabase("Events");
           db.newEvent(1, "Correr com os patos faz bem.", "Corrida dos patos", new Date(), "Mafra", 2, "none", Difficulty.ADVANCED, new User(1, "Bruno", "boss@b.pt","url"));
 
         Toast.makeText(FirebaseTestActivity.this, "BOOP", Toast.LENGTH_SHORT).show();
+      }
+    });
+  }
+
+  private void ciprasTest() {
+    buttonCipras.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference myRef = database.getReference("message");
+        FireBDatabase db = new FireBDatabase("MatchmakingRequest");
+        db.newMatchmakingRequest(30,60,20,21,4,"Cascais", 15, 1,"Bas Dost", false);
+        db.newMatchmakingRequest(45,69,19,22,3,"Cascais", 20, 1,"Castanhos", false);
+
+        //db.getDatabase().setValue("Hello, World!");
+        //db.writeNewUser(1, "Bruno", "boss@b.pt","url");
+        //db.writeNewUser(2, "Bruno1", "boss@b.pt1","url1");
+        //db.getDatabase().setValue("Hello world!");
+        //db.getDatabase().push()
+        //db = new FireBDatabase("Events");
+        //db.newEvent(1, "Correr com os patos faz bem.", "Corrida dos patos", new Date(), "Mafra", 2, "none", Difficulty.ADVANCED, new User(1, "Bruno", "boss@b.pt","url"));
+
+        Toast.makeText(FirebaseTestActivity.this, "CIPRAS", Toast.LENGTH_SHORT).show();
       }
     });
   }
