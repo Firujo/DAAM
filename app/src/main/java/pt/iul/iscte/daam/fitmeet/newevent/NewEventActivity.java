@@ -18,13 +18,7 @@ public class NewEventActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_newevent);
 
-    // Set up the toolbar.
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    ActionBar actionBar = getSupportActionBar();
-    actionBar.setTitle(R.string.new_event);
-    actionBar.setDisplayHomeAsUpEnabled(true);
-    actionBar.setDisplayShowHomeEnabled(true);
+    setupActionBar();
 
     if (null == savedInstanceState) {
       initFragment(NewEventFragment.newInstance());
@@ -34,6 +28,13 @@ public class NewEventActivity extends AppCompatActivity {
   @Override public boolean onSupportNavigateUp() {
     onBackPressed();
     return true;
+  }
+
+  private void setupActionBar() {
+    ActionBar ab = getSupportActionBar();
+    ab.setTitle(getResources().getString(R.string.new_event));
+    ab.setDisplayHomeAsUpEnabled(true);
+    ab.setDisplayShowHomeEnabled(true);
   }
 
   private void initFragment(Fragment detailFragment) {
