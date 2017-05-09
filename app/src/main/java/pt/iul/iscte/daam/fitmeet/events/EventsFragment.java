@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,7 +19,7 @@ import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
 import pt.iul.iscte.daam.fitmeet.data.EventsServiceApiImplementation;
-import pt.iul.iscte.daam.fitmeet.eventdetail.EventDetailActivity;
+import pt.iul.iscte.daam.fitmeet.newevent.NewEventActivity;
 
 /**
  * Created by jdandrade on 09/02/2017.
@@ -47,7 +46,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     EventsRepository eventsRepository =
         EventRepositories.getInMemoryRepoInstance(new EventsServiceApiImplementation());
     mActionsListener = new EventsPresenter(eventsRepository, this);
-    mListAdapter = new EventsAdapter(new ArrayList<Event>(0), mItemListener);
+    mListAdapter = new EventsAdapter(new ArrayList<>(0), mItemListener);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,11 +62,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
 
     FloatingActionButton fab =
         (FloatingActionButton) getActivity().findViewById(R.id.fab_add_event);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        mActionsListener.addNewEvent();
-      }
-    });
+    fab.setOnClickListener(v -> mActionsListener.addNewEvent());
 
     // Pull-to-refresh
     SwipeRefreshLayout swipeRefreshLayout =
@@ -76,11 +71,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
         ContextCompat.getColor(getActivity(), R.color.colorPrimary),
         ContextCompat.getColor(getActivity(), R.color.colorAccent),
         ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-      @Override public void onRefresh() {
-        mActionsListener.loadEvents(true);
-      }
-    });
+    swipeRefreshLayout.setOnRefreshListener(() -> mActionsListener.loadEvents(true));
 
     return view;
   }
@@ -90,7 +81,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   }
 
   @Override public void showAddEvent() {
-    Snackbar.make(getView(), "TODO", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+    startActivity(new Intent(getActivity(), NewEventActivity.class));
   }
 
   @Override public void showEventDetails(long eventId) {
@@ -107,11 +98,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
         (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
 
     // Make sure setRefreshing() is called after the layout is done with everything else.
-    swipeRefreshLayout.post(new Runnable() {
-      @Override public void run() {
-        swipeRefreshLayout.setRefreshing(showProgress);
-      }
-    });
+    swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(showProgress));
   }
 
   public interface EventItemListener {
