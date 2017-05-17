@@ -15,5 +15,13 @@
   <string name="my_account">My Account</string>
   <string name="successful_login">Successful login</string>
   <string name="empty_fields">Can not leave empty fields.</string>
+  <string name="new_event">Create gather</string>
+  <string name="hint_event_title">Event Title</string>
+  <string name="hint_description">Description</string>
+  <string name="privacy_public">Public</string>
+  <string name="privacy_private">Private</string>
+  <string name="label_date">Date</string>
+  <string name="save">SAVE</string>
+  <string name="create_event_gather_created">Gather created!</string>
 
 </resources>

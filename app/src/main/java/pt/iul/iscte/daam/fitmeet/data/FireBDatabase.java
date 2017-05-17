@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * Created by Bruno on 18/03/2017.
@@ -33,6 +34,13 @@ public class FireBDatabase {
         Event newEvent = new Event(id, description, title,date,location, numberOfLikes ,graphicURL, difficulty, owner);
         database.child(Long.toString(id)).setValue(newEvent);
     }
+
+    public void newMatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, long tipo, String user, boolean sanitized) {
+        MatchmakingRequest newMatchmakingRequest = new MatchmakingRequest(duracaoMax, duracaoMin, horaMax, horaMin, id, local, raio, tipo,user, sanitized );
+        database.child(Long.toString(id)).setValue(newMatchmakingRequest);
+    }
+
+
 
 
     public DatabaseReference getDatabase() { return database;}

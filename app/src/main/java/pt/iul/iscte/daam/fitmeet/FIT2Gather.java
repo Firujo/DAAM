@@ -1,6 +1,7 @@
 package pt.iul.iscte.daam.fitmeet;
 
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import pt.iul.iscte.daam.fitmeet.account.accountmanager.AndroidAccountDataPersist;
 import pt.iul.iscte.daam.fitmeet.account.accountmanager.FIT2GatherAccountManager;
 import pt.iul.iscte.daam.fitmeet.account.model.AccountFactory;
@@ -15,6 +16,11 @@ public class FIT2Gather extends android.app.Application {
 
   @Override public void onCreate() {
     super.onCreate();
+  }
+
+  @Override protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 
   public FIT2GatherAccountManager getAccountManager() {
