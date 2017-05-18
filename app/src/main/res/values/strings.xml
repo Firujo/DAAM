@@ -23,5 +23,8 @@
   <string name="label_date">Date</string>
   <string name="save">SAVE</string>
   <string name="create_event_gather_created">Gather created!</string>
+  <string name="birthday">Birthday</string>
+  <string name="country">Country</string>
+  <string name="city">City</string>
 
 </resources>

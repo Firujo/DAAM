@@ -29,7 +29,8 @@ public class RegisterManager {
   }
 
   public void registerNewUser(String name, String username, String password,
-      String passwordConfirmation, RegisterPresenter.RegisterListener listener) {
+      String passwordConfirmation, String birthday, String country, String city,
+      RegisterPresenter.RegisterListener listener) {
     boolean validInputs =
         credentialsValidator.validate(name, username, password, passwordConfirmation);
 
