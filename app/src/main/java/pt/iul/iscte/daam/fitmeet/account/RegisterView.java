@@ -6,7 +6,7 @@ package pt.iul.iscte.daam.fitmeet.account;
 
 interface RegisterView {
 
-  void showInvalidInputsMessage();
+  void showInvalidInputsMessage(int result);
 
   void successfulRegistration();
 

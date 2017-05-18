@@ -51,15 +51,15 @@ public class RegisterPresenter implements FragmentPresenter {
   public void pressedRegister(String name, String username, String password,
       String passwordConfirmation, String birthday, String country, String city) {
     registerManager.registerNewUser(name, username, password, passwordConfirmation, birthday,
-        country, city,
-        new RegisterListener() {
-          @Override public void onCompleteRegistration(int success) {
-            if (success == RegisterManager.INVALID_INPUTS) {
-              view.showInvalidInputsMessage();
-            } else if (success == RegisterManager.SUCCESSFUL_REGISTRATION) {
+        country, city, new RegisterListener() {
+          @Override public void onCompleteRegistration(int result) {
+
+            if (result == RegisterManager.SUCCESSFUL_REGISTRATION) {
               view.successfulRegistration();
-            } else {
+            } else if (result == RegisterManager.UNSUCCESSFUL_REGISTRATION) {
               view.showUnsuccessfulRegistration();
+            } else {
+              view.showInvalidInputsMessage(result);
             }
           }
         });

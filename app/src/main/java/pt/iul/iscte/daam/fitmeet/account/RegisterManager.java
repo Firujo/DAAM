@@ -14,9 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterManager {
 
-  public static final int INVALID_INPUTS = 0;
-  public static final int SUCCESSFUL_REGISTRATION = 1;
-  public static final int UNSUCCESSFUL_REGISTRATION = 2;
+  public static final int SUCCESSFUL_REGISTRATION = 8;
+  public static final int UNSUCCESSFUL_REGISTRATION = 9;
+
   private FirebaseAuth mAuth;
   private RegisterCredentialsValidator credentialsValidator;
 
@@ -31,13 +31,11 @@ public class RegisterManager {
   public void registerNewUser(String name, String username, String password,
       String passwordConfirmation, String birthday, String country, String city,
       RegisterPresenter.RegisterListener listener) {
-    boolean validInputs =
+    int inputsValidationResult =
         credentialsValidator.validate(name, username, password, passwordConfirmation, birthday,
             country, city);
 
-    if (!validInputs) {
-      listener.onCompleteRegistration(INVALID_INPUTS);
-    } else {
+    if (inputsValidationResult == RegisterCredentialsValidator.SUCCESS) {
       mAuth.createUserWithEmailAndPassword(username, password)
           .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override public void onComplete(@NonNull Task<AuthResult> task) {
@@ -56,6 +54,9 @@ public class RegisterManager {
               // ...
             }
           });
+
+    } else {
+      listener.onCompleteRegistration(inputsValidationResult);
     }
   }
 }

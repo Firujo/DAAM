@@ -2,7 +2,6 @@ package pt.iul.iscte.daam.fitmeet.account;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
@@ -141,8 +135,42 @@ public class RegisterFragment extends FragmentView implements RegisterView {
 
   }
 
-  @Override public void showInvalidInputsMessage() {
-    Toast.makeText(getContext(), "Invalid fields, please correct them", Toast.LENGTH_SHORT).show();
+  @Override public void showInvalidInputsMessage(int result) {
+
+    switch (result) {
+      case RegisterCredentialsValidator.EMPTY_NAME:
+        nameEditText.setError("Name can not be empty !");
+        nameEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.EMPTY_USERNAME:
+        usernameEditText.setError("Username can not be empty !");
+        usernameEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.EMPTY_PASSWORD:
+        passwordEditText.setError("Password can not be empty !");
+        passwordEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.INVALID_PASSWORD_MATCH:
+        passwordConfirmationEditText.setError("password and password confirmation don't match");
+        passwordConfirmationEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.EMPTY_BIRTHDAY:
+        birthdayEditText.setError("Birthday can not be empty !");
+        birthdayEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.EMPTY_COUNTRY:
+        countryEditText.setError("Country can not be empty !");
+        countryEditText.requestFocus();
+        break;
+      case RegisterCredentialsValidator.EMPTY_CITY:
+        cityEditText.setError("City can not be empty !");
+        cityEditText.requestFocus();
+        break;
+      default:
+        Toast.makeText(getContext(),
+            "There was an unknown error while trying to parse the data. Please try again",
+            Toast.LENGTH_SHORT).show();
+    }
   }
 
   @Override public void successfulRegistration() {

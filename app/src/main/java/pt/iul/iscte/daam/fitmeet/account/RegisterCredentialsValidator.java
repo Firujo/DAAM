@@ -1,30 +1,38 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+
 /**
  * Created by filipe on 01-05-2017.
  */
 
 class RegisterCredentialsValidator {
 
-  public boolean validate(String name, String username, String password,
+  public static final int EMPTY_NAME = 0;
+  public static final int EMPTY_USERNAME = 1;
+  public static final int EMPTY_PASSWORD = 2;
+  public static final int INVALID_PASSWORD_MATCH = 3;
+  public static final int EMPTY_BIRTHDAY = 4;
+  public static final int EMPTY_COUNTRY = 5;
+  public static final int EMPTY_CITY = 6;
+  public static final int SUCCESS = 7;
+
+  public int validate(String name, String username, String password,
       String passwordConfirmation, String birthday, String country, String city) {
     if (name.isEmpty()) {
-      return false;
+      return EMPTY_NAME;
     } else if (username.isEmpty()) {
-      return false;
+      return EMPTY_USERNAME;
     } else if (password.isEmpty()) {
-      return false;
-    } else if (passwordConfirmation.isEmpty()) {
-      return false;
-    } else if (!password.equals(passwordConfirmation)) {
-      return false;
-    } else if (!birthday.isEmpty()) {
-      return false;
-    } else if (!country.isEmpty()) {
-      return false;
-    } else if (!city.isEmpty()) {
-      return false;
+      return EMPTY_PASSWORD;
+    } else if (passwordConfirmation.isEmpty() || !password.equals(passwordConfirmation)) {
+      return INVALID_PASSWORD_MATCH;
+    } else if (birthday.isEmpty()) {
+      return EMPTY_BIRTHDAY;
+    } else if (country.isEmpty()) {
+      return EMPTY_COUNTRY;
+    } else if (city.isEmpty()) {
+      return EMPTY_CITY;
     }
-    return true;
+    return SUCCESS;
   }
 }
