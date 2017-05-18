@@ -32,7 +32,8 @@ public class RegisterManager {
       String passwordConfirmation, String birthday, String country, String city,
       RegisterPresenter.RegisterListener listener) {
     boolean validInputs =
-        credentialsValidator.validate(name, username, password, passwordConfirmation);
+        credentialsValidator.validate(name, username, password, passwordConfirmation, birthday,
+            country, city);
 
     if (!validInputs) {
       listener.onCompleteRegistration(INVALID_INPUTS);
