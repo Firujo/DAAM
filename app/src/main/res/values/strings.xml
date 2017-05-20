@@ -33,4 +33,7 @@
   <string name="ok">OK</string>
   <string name="join_fit2gather">Join Fit2Gather</string>
 
+  <string name="welcome_message">Welcome %1$s</string>
+  <string name="logout">Logout</string>
+
 </resources>
