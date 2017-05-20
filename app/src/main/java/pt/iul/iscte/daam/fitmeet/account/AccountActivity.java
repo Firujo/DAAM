@@ -1,17 +1,17 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
-import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+import pt.iul.iscte.daam.fitmeet.FIT2Gather;
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.events.EventsFragment;
 
 public class AccountActivity extends AppCompatActivity
-    implements AccountFragment.AccountFragmentListener {
+    implements SignUpOrLoginFragment.AccountFragmentListener {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -19,15 +19,20 @@ public class AccountActivity extends AppCompatActivity
 
     setupActionBar();
 
-    if (null == savedInstanceState) {
-      initFragment(AccountFragment.newInstance());
+    //((FIT2Gather) context).getAccountManager().login();
+    //boolean isLoggedIn =((FIT2Gather) getApplicationContext()).getAccountManager().accountStatus().isLoggedIn();
+    boolean isLoggedIn = false;
+    if (isLoggedIn) {
+      initFragment(LoggedInFragment.newInstance());
+    } else {
+      initFragment(SignUpOrLoginFragment.newInstance());
     }
   }
 
-  private void initFragment(AccountFragment accountFragment) {
+  private void initFragment(Fragment fragment) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.add(R.id.accountFrameLayout, accountFragment);
+    transaction.add(R.id.accountFrameLayout, fragment);
     transaction.commit();
   }
 
