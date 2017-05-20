@@ -12,28 +12,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import pt.iul.iscte.daam.fitmeet.R;
 
-public class AccountFragment extends Fragment {
+public class SignUpOrLoginFragment extends Fragment {
 
-  private AccountFragmentListener accountFragmentListener;
+  private AccountFragmentListener signUpOrLoginFragmentListener;
   private Button registerButton;
   private Button loginButton;
 
-  public AccountFragment() {
+  public SignUpOrLoginFragment() {
   }
 
-  public static AccountFragment newInstance() {
-    return new AccountFragment();
+  public static SignUpOrLoginFragment newInstance() {
+    return new SignUpOrLoginFragment();
   }
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);
 
     if (context instanceof AccountFragmentListener) {
-      accountFragmentListener = (AccountFragmentListener) context;
+      signUpOrLoginFragmentListener = (AccountFragmentListener) context;
     } else {
       throw new RuntimeException(
           context.toString() + " must implement OnFragmentInteractionListener");
     }
+
+    //((FIT2Gather) context).getAccountManager().login();
+    //((FIT2Gather) context).getAccountManager().isLoggedIn()
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class AccountFragment extends Fragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_account, container, false);
+    View view = inflater.inflate(R.layout.fragment_signuporlogin, container, false);
     registerButton = (Button) view.findViewById(R.id.registerFragmentButton);
     loginButton = (Button) view.findViewById(R.id.loginFragmentButton);
 

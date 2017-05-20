@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.iul.iscte.daam.fitmeet.account.AccountFragment"
+    tools:context="pt.iul.iscte.daam.fitmeet.account.SignUpOrLoginFragment"
     >
 
   <Button
