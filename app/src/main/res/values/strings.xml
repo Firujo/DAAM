@@ -27,5 +27,7 @@
   <string name="birthday">Birthday</string>
   <string name="country">Country</string>
   <string name="city">City</string>
+  <string name="difficulty">Difficulty</string>
+  <string name="choose">Choose</string>
 
 </resources>

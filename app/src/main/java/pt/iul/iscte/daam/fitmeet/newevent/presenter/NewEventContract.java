@@ -10,10 +10,14 @@ public interface NewEventContract {
     void showNewEventError();
 
     void showNewEventSuccess();
+
+    void showDifficultyPicker();
   }
 
   interface UserActionsListener {
 
     void saveEvent(String title, String description);
+
+    void difficultyButtonClicked();
   }
 }

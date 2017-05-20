@@ -14,6 +14,7 @@
       android:layout_marginBottom="10dp"
       android:layout_marginEnd="30dp"
       android:layout_marginStart="30dp"
+      android:layout_marginTop="10dp"
       android:background="@android:color/transparent"
       android:hint="@string/hint_event_title"
       />
@@ -60,26 +61,26 @@
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@color/cardview_dark_background"
+        android:src="@drawable/ic_rowing_black_48dp"
         />
 
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
-        android:background="@color/cardview_dark_background"
+        android:src="@drawable/ic_run_black_48dp"
         />
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
-        android:background="@color/cardview_dark_background"
+        android:src="@drawable/ic_bike_black_48dp"
         />
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
-        android:background="@color/cardview_dark_background"
+        android:src="@drawable/ic_image_filter_hdr_black_48dp"
         />
   </LinearLayout>
 
@@ -108,17 +109,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_weight="0.5"
-        tools:text="Difficulty"
+        android:text="@string/difficulty"
         />
 
-    <RatingBar
-        android:id="@+id/rating_bar"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/difficulty_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:numStars="5"
-        android:rating="4"
-        style="?android:attr/ratingBarStyleSmall"
+        android:layout_weight="0.5"
+        android:text="@string/choose"
+        style="@style/Widget.AppCompat.Button.Borderless"
         />
 
   </LinearLayout>
@@ -136,6 +136,7 @@
       android:id="@+id/new_event_date_container"
       android:layout_width="match_parent"
       android:layout_height="40dp"
+      android:layout_marginBottom="10dp"
       android:orientation="horizontal"
       android:weightSum="1"
       >
