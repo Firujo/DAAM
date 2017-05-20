@@ -59,24 +59,28 @@
       >
 
     <ImageView
+        android:id="@+id/new_event_rowing_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_rowing_black_48dp"
         />
 
     <ImageView
+        android:id="@+id/new_event_running_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/ic_run_black_48dp"
         />
     <ImageView
+        android:id="@+id/new_event_cycling_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:src="@drawable/ic_bike_black_48dp"
         />
     <ImageView
+        android:id="@+id/new_event_trailing"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"

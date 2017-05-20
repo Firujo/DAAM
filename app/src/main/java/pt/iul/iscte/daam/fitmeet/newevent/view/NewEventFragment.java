@@ -1,10 +1,13 @@
 package pt.iul.iscte.daam.fitmeet.newevent.view;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import pt.iul.iscte.daam.fitmeet.R;
@@ -30,6 +34,11 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   private TextView title;
   private TextView description;
   private Button difficultyPicker;
+  private ImageView rowingImage;
+  private ImageView runningImage;
+  private ImageView trailingImage;
+  private ImageView cyclingImage;
+  private Drawable defaultBackground;
 
   public NewEventFragment() {
   }
@@ -44,6 +53,10 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     title = (EditText) view.findViewById(R.id.new_event_title);
     description = (EditText) view.findViewById(R.id.new_event_description);
     difficultyPicker = (Button) view.findViewById(R.id.difficulty_button);
+    rowingImage = (ImageView) view.findViewById(R.id.new_event_rowing_image);
+    runningImage = (ImageView) view.findViewById(R.id.new_event_running_image);
+    cyclingImage = (ImageView) view.findViewById(R.id.new_event_cycling_image);
+    trailingImage = (ImageView) view.findViewById(R.id.new_event_trailing);
 
     setupViews();
 
@@ -54,6 +67,35 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
 
   private void setupViews() {
     difficultyPicker.setOnClickListener(v -> actionsListener.difficultyButtonClicked());
+    defaultBackground = rowingImage.getBackground();
+
+    rowingImage.setOnClickListener(v -> {
+      rowingImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+      runningImage.setBackground(defaultBackground);
+      cyclingImage.setBackground(defaultBackground);
+      trailingImage.setBackground(defaultBackground);
+    });
+
+    runningImage.setOnClickListener(v -> {
+      rowingImage.setBackground(defaultBackground);
+      runningImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+      cyclingImage.setBackground(defaultBackground);
+      trailingImage.setBackground(defaultBackground);
+    });
+
+    cyclingImage.setOnClickListener(v -> {
+      rowingImage.setBackground(defaultBackground);
+      runningImage.setBackground(defaultBackground);
+      cyclingImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+      trailingImage.setBackground(defaultBackground);
+    });
+
+    trailingImage.setOnClickListener(v -> {
+      rowingImage.setBackground(defaultBackground);
+      runningImage.setBackground(defaultBackground);
+      cyclingImage.setBackground(defaultBackground);
+      trailingImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+    });
   }
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
@@ -107,5 +149,14 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     });
     buttonNegative.setOnClickListener(v -> dialog.dismiss());
     dialog.show();
+  }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    trailingImage.setOnClickListener(null);
+    rowingImage.setOnClickListener(null);
+    cyclingImage.setOnClickListener(null);
+    trailingImage.setOnClickListener(null);
+    difficultyPicker.setOnClickListener(null);
   }
 }
