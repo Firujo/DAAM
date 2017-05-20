@@ -48,4 +48,8 @@ public class NewEventPresenter implements NewEventContract.UserActionsListener {
   @Override public void difficultyButtonClicked() {
     newEventView.showDifficultyPicker();
   }
+
+  @Override public void dateButtonClicked() {
+    newEventView.showDatePicker();
+  }
 }

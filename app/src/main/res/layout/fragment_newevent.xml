@@ -146,7 +146,7 @@
       >
     <TextView
         android:id="@+id/new_event_date_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
         android:layout_weight="0.5"
@@ -154,13 +154,13 @@
         android:text="@string/label_date"
         />
 
-    <TextView
-        android:id="@+id/new_event_date_result"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/new_event_date_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:gravity="center"
-        tools:text="10/10/2009"
+        android:text="@string/choose"
+        style="@style/Widget.AppCompat.Button.Borderless"
         />
   </LinearLayout>
 

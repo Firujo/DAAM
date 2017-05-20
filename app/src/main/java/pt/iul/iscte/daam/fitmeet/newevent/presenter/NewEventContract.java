@@ -12,6 +12,8 @@ public interface NewEventContract {
     void showNewEventSuccess();
 
     void showDifficultyPicker();
+
+    void showDatePicker();
   }
 
   interface UserActionsListener {
@@ -19,5 +21,7 @@ public interface NewEventContract {
     void saveEvent(String title, String description);
 
     void difficultyButtonClicked();
+
+    void dateButtonClicked();
   }
 }

@@ -2,7 +2,6 @@ package pt.iul.iscte.daam.fitmeet.newevent.view;
 
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -39,6 +38,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   private ImageView trailingImage;
   private ImageView cyclingImage;
   private Drawable defaultBackground;
+  private Button datePicker;
 
   public NewEventFragment() {
   }
@@ -57,6 +57,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     runningImage = (ImageView) view.findViewById(R.id.new_event_running_image);
     cyclingImage = (ImageView) view.findViewById(R.id.new_event_cycling_image);
     trailingImage = (ImageView) view.findViewById(R.id.new_event_trailing);
+    datePicker = (Button) view.findViewById(R.id.new_event_date_button);
 
     setupViews();
 
@@ -67,6 +68,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
 
   private void setupViews() {
     difficultyPicker.setOnClickListener(v -> actionsListener.difficultyButtonClicked());
+    datePicker.setOnClickListener(v -> actionsListener.dateButtonClicked());
     defaultBackground = rowingImage.getBackground();
 
     rowingImage.setOnClickListener(v -> {
@@ -149,6 +151,12 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     });
     buttonNegative.setOnClickListener(v -> dialog.dismiss());
     dialog.show();
+  }
+
+  @Override public void showDatePicker() {
+    DatePickerFragment newFragment = new DatePickerFragment();
+    newFragment.setDateButton(datePicker);
+    newFragment.show(getFragmentManager(), "datePicker");
   }
 
   @Override public void onDestroyView() {
