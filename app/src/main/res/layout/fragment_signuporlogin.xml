@@ -1,26 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="pt.iul.iscte.daam.fitmeet.account.SignUpOrLoginFragment"
     >
 
+  <android.support.v7.widget.AppCompatImageView
+      android:id="@+id/background_image"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:background="@color/com_facebook_blue"
+      android:orientation="horizontal"
+      />
+
+  <android.support.v7.widget.AppCompatImageView
+      android:id="@+id/app_icon"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_alignBottom="@+id/background_image"
+      android:layout_centerInParent="true"
+      android:background="@mipmap/ic_launcher"
+      android:layout_marginBottom="-20dp"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="RANDOM INFO RANDOM INFO RANDOM INFO RANDOM INFO"
+      android:layout_marginTop="30dp"
+      android:layout_below="@id/app_icon"
+      />
   <Button
       android:id="@+id/registerFragmentButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/join_fit2gather"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
       android:layout_margin="15dp"
+      android:text="@string/join_fit2gather"
       />
 
   <Button
       android:id="@+id/loginFragmentButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/login"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
       android:layout_margin="15dp"
+      android:text="@string/login"
       />
 
 
-</LinearLayout>
+</RelativeLayout>
