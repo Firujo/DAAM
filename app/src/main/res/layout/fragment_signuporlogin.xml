@@ -10,7 +10,7 @@
       android:id="@+id/registerFragmentButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Join Fit2Gather"
+      android:text="@string/join_fit2gather"
       android:layout_margin="15dp"
       />
 
