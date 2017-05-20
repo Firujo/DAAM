@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet.newevent;
+package pt.iul.iscte.daam.fitmeet.newevent.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.newevent.model.NewEventDataValidator;
+import pt.iul.iscte.daam.fitmeet.newevent.presenter.NewEventContract;
+import pt.iul.iscte.daam.fitmeet.newevent.presenter.NewEventPresenter;
 
 /**
  * Main UI for the new event screen. Users can enter event details.
@@ -44,7 +47,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
 
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    actionsListener = new NewEventPresenter(this);
+    actionsListener = new NewEventPresenter(this, new NewEventDataValidator());
   }
 
   @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -55,14 +58,23 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.save:
-        Snackbar.make(getView(), getString(R.string.create_event_gather_created),
-            Snackbar.LENGTH_LONG).show();
+        actionsListener.saveEvent(title.getText().toString(), description.getText().toString());
         return true;
     }
     return false;
   }
 
   @Override public void showNewEventError() {
-    // TODO: 04/05/2017 error
+    if (getView() != null) {
+      Snackbar.make(getView(), getString(R.string.create_event_gather_error),
+          Snackbar.LENGTH_LONG).show();
+    }
+  }
+
+  @Override public void showNewEventSuccess() {
+    if (getView() != null) {
+      Snackbar.make(getView(), getString(R.string.create_event_gather_created),
+          Snackbar.LENGTH_LONG).show();
+    }
   }
 }

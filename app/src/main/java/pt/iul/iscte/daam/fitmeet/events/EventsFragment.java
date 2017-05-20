@@ -19,7 +19,7 @@ import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
 import pt.iul.iscte.daam.fitmeet.data.EventsServiceApiImplementation;
-import pt.iul.iscte.daam.fitmeet.newevent.NewEventActivity;
+import pt.iul.iscte.daam.fitmeet.newevent.view.NewEventActivity;
 
 /**
  * Created by jdandrade on 09/02/2017.

@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package pt.iul.iscte.daam.fitmeet.newevent;
+package pt.iul.iscte.daam.fitmeet.newevent.presenter;
 
 import android.support.annotation.NonNull;
+import pt.iul.iscte.daam.fitmeet.newevent.model.NewEventDataValidator;
+import pt.iul.iscte.daam.fitmeet.newevent.model.NewEventValidationException;
+import pt.iul.iscte.daam.fitmeet.newevent.view.NewEventFragment;
 
 /**
  * Listens to user actions from the UI ({@link NewEventFragment}), retrieves the data and updates
@@ -25,12 +28,20 @@ import android.support.annotation.NonNull;
 public class NewEventPresenter implements NewEventContract.UserActionsListener {
 
   @NonNull private final NewEventContract.View newEventView;
+  private NewEventDataValidator newEventDataValidator;
 
-  public NewEventPresenter(@NonNull NewEventContract.View newEventView) {
+  public NewEventPresenter(@NonNull NewEventContract.View newEventView,
+      NewEventDataValidator newEventDataValidator) {
     this.newEventView = newEventView;
+    this.newEventDataValidator = newEventDataValidator;
   }
 
   @Override public void saveEvent(String title, String description) {
-    // TODO: 04/05/2017 save event
+    try {
+      newEventDataValidator.validate(title, description);
+      newEventView.showNewEventSuccess();
+    } catch (NewEventValidationException e) {
+      newEventView.showNewEventError();
+    }
   }
 }

@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet.newevent;
+package pt.iul.iscte.daam.fitmeet.newevent.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import pt.iul.iscte.daam.fitmeet.R;
 
 /**
