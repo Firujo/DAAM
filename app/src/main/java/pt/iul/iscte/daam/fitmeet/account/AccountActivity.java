@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -19,15 +20,19 @@ public class AccountActivity extends AppCompatActivity
     setupActionBar();
 
     //((FIT2Gather) context).getAccountManager().login();
-    if (null == savedInstanceState) {
+    //boolean isLoggedIn =((FIT2Gather) getApplicationContext()).getAccountManager().accountStatus().isLoggedIn();
+    boolean isLoggedIn = false;
+    if (isLoggedIn) {
+      initFragment(LoggedInFragment.newInstance());
+    } else {
       initFragment(SignUpOrLoginFragment.newInstance());
     }
   }
 
-  private void initFragment(SignUpOrLoginFragment signUpOrLoginFragment) {
+  private void initFragment(Fragment fragment) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.add(R.id.accountFrameLayout, signUpOrLoginFragment);
+    transaction.add(R.id.accountFrameLayout, fragment);
     transaction.commit();
   }
 
