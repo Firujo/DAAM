@@ -11,23 +11,23 @@
       android:layout_marginTop="64dp" />
 
   <Button
-      android:id="@+id/button_negative"
+      android:id="@+id/button_affirmative"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@+id/numberPicker1"
       android:layout_marginStart="20dp"
       android:layout_marginTop="98dp"
       android:layout_toEndOf="@+id/numberPicker1"
-      android:text="Cancel" />
+      android:text="@string/ok" />
 
   <Button
-      android:id="@+id/button_affirmative"
+      android:id="@+id/button_negative"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignBaseline="@+id/button_negative"
-      android:layout_alignBottom="@+id/button_negative"
+      android:layout_alignBaseline="@+id/button_affirmative"
+      android:layout_alignBottom="@+id/button_affirmative"
       android:layout_marginEnd="16dp"
       android:layout_toStartOf="@+id/numberPicker1"
-      android:text="Set" />
+      android:text="@string/cancel" />
 
 </RelativeLayout>

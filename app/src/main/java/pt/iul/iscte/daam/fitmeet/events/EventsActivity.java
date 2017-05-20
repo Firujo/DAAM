@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
-import pt.iul.iscte.daam.fitmeet.account.AccountActivity;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.account.AccountActivity;
 import pt.iul.iscte.daam.fitmeet.firebase.FirebaseTestActivity;
 
 /**
@@ -98,14 +98,6 @@ public class EventsActivity extends AppCompatActivity
       startActivity(new Intent(EventsActivity.this, FirebaseTestActivity.class));
     } else if (id == R.id.nav_gallery) {
       startActivity(new Intent(EventsActivity.this, AccountActivity.class));
-    } else if (id == R.id.nav_slideshow) {
-
-    } else if (id == R.id.nav_manage) {
-
-    } else if (id == R.id.nav_share) {
-
-    } else if (id == R.id.nav_send) {
-
     }
     this.drawer.closeDrawer(GravityCompat.START);
     return true;

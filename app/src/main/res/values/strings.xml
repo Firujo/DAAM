@@ -29,5 +29,7 @@
   <string name="city">City</string>
   <string name="difficulty">Difficulty</string>
   <string name="choose">Choose</string>
+  <string name="cancel">Cancel</string>
+  <string name="ok">OK</string>
 
 </resources>
