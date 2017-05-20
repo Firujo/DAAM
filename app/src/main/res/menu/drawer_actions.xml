@@ -3,34 +3,34 @@
 
   <group android:checkableBehavior="single">
     <item
+        android:id="@+id/nav_gallery"
+        android:title="@string/my_account" />
+    <item
         android:id="@+id/nav_camera"
         android:title="FIREBASE_TEST" />
     <!--android:icon="@drawable/ic_menu_camera"-->
-    <item
-        android:id="@+id/nav_gallery"
-        android:title="@string/my_account" />
     <!--android:icon="@drawable/ic_menu_gallery"-->
-    <item
-        android:id="@+id/nav_slideshow"
-        android:title="teste" />
-    <!--android:icon="@drawable/ic_menu_slideshow"-->
-    <item
-        android:id="@+id/nav_manage"
-        android:title="whatever" />
-    <!--android:icon="@drawable/ic_menu_manage"-->
+    <!--<item-->
+        <!--android:id="@+id/nav_slideshow"-->
+        <!--android:title="teste" />-->
+    <!--&lt;!&ndash;android:icon="@drawable/ic_menu_slideshow"&ndash;&gt;-->
+    <!--<item-->
+        <!--android:id="@+id/nav_manage"-->
+        <!--android:title="whatever" />-->
+    <!--&lt;!&ndash;android:icon="@drawable/ic_menu_manage"&ndash;&gt;-->
   </group>
 
-  <item android:title="cat">
-    <menu>
-      <item
-          android:id="@+id/nav_share"
-          android:title="duck" />
-      <!--android:icon="@drawable/ic_menu_share"-->
-      <item
-          android:id="@+id/nav_send"
-          android:title="duck" />
-      <!--android:icon="@drawable/ic_menu_send"-->
-    </menu>
-  </item>
+  <!--<item android:title="cat">-->
+    <!--<menu>-->
+      <!--<item-->
+          <!--android:id="@+id/nav_share"-->
+          <!--android:title="duck" />-->
+      <!--&lt;!&ndash;android:icon="@drawable/ic_menu_share"&ndash;&gt;-->
+      <!--<item-->
+          <!--android:id="@+id/nav_send"-->
+          <!--android:title="duck" />-->
+      <!--&lt;!&ndash;android:icon="@drawable/ic_menu_send"&ndash;&gt;-->
+    <!--</menu>-->
+  <!--</item>-->
 
 </menu>

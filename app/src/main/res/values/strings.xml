@@ -27,6 +27,10 @@
   <string name="birthday">Birthday</string>
   <string name="country">Country</string>
   <string name="city">City</string>
+  <string name="difficulty">Difficulty</string>
+  <string name="choose">Choose</string>
+  <string name="cancel">Cancel</string>
+  <string name="ok">OK</string>
   <string name="join_fit2gather">Join Fit2Gather</string>
 
 </resources>

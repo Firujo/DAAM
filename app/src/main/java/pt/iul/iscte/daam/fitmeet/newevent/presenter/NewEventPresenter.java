@@ -44,4 +44,12 @@ public class NewEventPresenter implements NewEventContract.UserActionsListener {
       newEventView.showNewEventError();
     }
   }
+
+  @Override public void difficultyButtonClicked() {
+    newEventView.showDifficultyPicker();
+  }
+
+  @Override public void dateButtonClicked() {
+    newEventView.showDatePicker();
+  }
 }

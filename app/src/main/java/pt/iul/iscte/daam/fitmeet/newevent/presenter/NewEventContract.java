@@ -10,10 +10,18 @@ public interface NewEventContract {
     void showNewEventError();
 
     void showNewEventSuccess();
+
+    void showDifficultyPicker();
+
+    void showDatePicker();
   }
 
   interface UserActionsListener {
 
     void saveEvent(String title, String description);
+
+    void difficultyButtonClicked();
+
+    void dateButtonClicked();
   }
 }
