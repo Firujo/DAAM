@@ -34,9 +34,6 @@ public class SignUpOrLoginFragment extends Fragment {
       throw new RuntimeException(
           context.toString() + " must implement OnFragmentInteractionListener");
     }
-
-    //((FIT2Gather) context).getAccountManager().login();
-    //((FIT2Gather) context).getAccountManager().isLoggedIn()
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
