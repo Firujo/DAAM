@@ -8,7 +8,6 @@ import android.support.multidex.MultiDex;
  */
 
 public class FIT2Gather extends android.app.Application {
-  private FIT2GatherAccountManager accountManager;
 
   @Override public void onCreate() {
     super.onCreate();
