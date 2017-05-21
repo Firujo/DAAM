@@ -51,8 +51,7 @@ public class FacebookLoginManager {
         });
   }
 
-  private void handleFacebookAccessToken(
-      AccessToken accessToken) {//FIXME auth needs to be the same as it is in appLoginManager due to the authStateListener
+  private void handleFacebookAccessToken(AccessToken accessToken) {
     AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
     mAuth.signInWithCredential(credential)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
