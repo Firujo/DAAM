@@ -19,6 +19,7 @@ import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
 import pt.iul.iscte.daam.fitmeet.data.EventsServiceApiImplementation;
+import pt.iul.iscte.daam.fitmeet.eventdetail.view.EventDetailActivity;
 import pt.iul.iscte.daam.fitmeet.newevent.view.NewEventActivity;
 
 /**
@@ -85,9 +86,9 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   }
 
   @Override public void showEventDetails(long eventId) {
-    //Intent intent = new Intent(getContext(), EventDetailActivity.class);
-    //intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
-    //startActivity(intent);
+    Intent intent = new Intent(getContext(), EventDetailActivity.class);
+    intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
+    startActivity(intent);
   }
 
   @Override public void setProgressIndicator(final boolean showProgress) {
