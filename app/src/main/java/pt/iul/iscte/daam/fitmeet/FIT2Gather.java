@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet;
 
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import pt.iul.iscte.daam.fitmeet.account.accountmanager.AndroidAccountDataPersist;
@@ -30,8 +31,8 @@ public class FIT2Gather extends android.app.Application {
 
       final AccountFactory accountFactory = new AccountFactory(new SocialAccountFactory());
 
-      // TODO: 08/04/2017 init this
-      final AndroidAccountDataPersist androidAccountDataPersist = null;
+      final AndroidAccountDataPersist androidAccountDataPersist =
+          new AndroidAccountDataPersist("", AccountManager.get(context), accountFactory);
 
       accountManager =
           new FIT2GatherAccountManager.Builder().setAccountDataPersist(androidAccountDataPersist)
