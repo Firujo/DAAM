@@ -66,18 +66,16 @@ public class SignUpOrLoginFragment extends Fragment {
   }
 
   private void initLoginFragment(LoginFragment loginFragment) {
-    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    FragmentManager fragmentManager = getChildFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.replace(R.id.accountFrameLayout, loginFragment);
-    transaction.addToBackStack(null);
     transaction.commit();
   }
 
   private void initRegisterFragment(RegisterFragment registerFragment) {
-    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+    FragmentManager fragmentManager = getChildFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.replace(R.id.accountFrameLayout, registerFragment);
-    transaction.addToBackStack(null);
     transaction.commit();
   }
 
