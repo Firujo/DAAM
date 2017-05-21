@@ -43,30 +43,6 @@ public class RegisterFragment extends FragmentView implements RegisterView {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     mAuth = FirebaseAuth.getInstance();
-    //
-    //mAuthListener = new FirebaseAuth.AuthStateListener() {
-    //  @Override
-    //  public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-    //    FirebaseUser user = firebaseAuth.getCurrentUser();
-    //    if (user != null) {
-    //      if (user.isEmailVerified()) {
-    //        System.out.println("Email is verified");
-    //        System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-    //      }
-    //      else {
-    //        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-    //                .setDisplayName(nameEditText.getText().toString())
-    //                .build();
-    //        user.updateProfile(profileUpdates);
-    //        user.sendEmailVerification();
-    //        System.out.println("Email is not verified");
-    //      }
-    //
-    //    } else {
-    //      System.out.println("onAuthStateChanged:signed_out");
-    //    }
-    //  }
-    //};
 
     super.onCreate(savedInstanceState);
   }
@@ -74,15 +50,11 @@ public class RegisterFragment extends FragmentView implements RegisterView {
   @Override
   public void onStart() {
     super.onStart();
-    //mAuth.addAuthStateListener(mAuthListener);
   }
 
   @Override
   public void onStop() {
     super.onStop();
-    //if (mAuthListener != null) {
-    //  mAuth.removeAuthStateListener(mAuthListener);
-    //}
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,7 +79,6 @@ public class RegisterFragment extends FragmentView implements RegisterView {
     cityEditText = (EditText) view.findViewById(R.id.city);
   }
 
-  //// TODO: 01-05-2017  ver v8 phoneinputfragment
   private void setupListener() {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
