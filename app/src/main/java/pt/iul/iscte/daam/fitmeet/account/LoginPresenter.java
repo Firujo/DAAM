@@ -12,12 +12,14 @@ public class LoginPresenter implements FragmentPresenter {
   private LoginView view;
   private AppLoginManager appLoginManager;
   private FacebookLoginManager facebookLoginManager;
+  private LoginStatusManager loginStatusManager;
 
   public LoginPresenter(LoginView view, AppLoginManager appLoginManager,
-      FacebookLoginManager facebookLoginManager) {
+      FacebookLoginManager facebookLoginManager, LoginStatusManager loginStatusManager) {
     this.view = view;
     this.appLoginManager = appLoginManager;
     this.facebookLoginManager = facebookLoginManager;
+    this.loginStatusManager = loginStatusManager;
   }
 
   @Override public void onCreateView() {
@@ -67,6 +69,8 @@ public class LoginPresenter implements FragmentPresenter {
 
       @Override public void onSuccess() {
         view.showLoginSuccessfulToast();
+        loginStatusManager.saveLoginStatus(username, password);
+
       }
 
       @Override public void onError(int error) {

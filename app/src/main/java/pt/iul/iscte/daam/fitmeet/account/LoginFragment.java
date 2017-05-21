@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.facebook.login.widget.LoginButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
 public class LoginFragment extends FragmentView implements LoginView {
@@ -34,6 +36,7 @@ public class LoginFragment extends FragmentView implements LoginView {
   private FirebaseAuth firebaseAuth;
   private LoginPresenter loginPresenter;
   private OnFragmentInteractionListener mListener;
+  private LoginStatusManager loginStatusManager;
 
   public LoginFragment() {
   }
@@ -46,6 +49,9 @@ public class LoginFragment extends FragmentView implements LoginView {
   @Override public void onCreate(Bundle savedInstanceState) {
     FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
     firebaseAuth = FirebaseAuth.getInstance();
+    loginStatusManager = LoginStatusManager.getInstance(
+        getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE));
     super.onCreate(savedInstanceState);
   }
 
@@ -71,19 +77,17 @@ public class LoginFragment extends FragmentView implements LoginView {
     AppLoginManager appLoginManager = new AppLoginManager(firebaseAuth);
     FacebookLoginManager facebookLoginManager = new FacebookLoginManager(firebaseAuth);
 
-    loginPresenter = new LoginPresenter(this, appLoginManager, facebookLoginManager);
+    loginPresenter =
+        new LoginPresenter(this, appLoginManager, facebookLoginManager, loginStatusManager);
     attachPresenter(loginPresenter);
     super.onViewCreated(view, savedInstanceState);
-
   }
 
-  @Override
-  public void onStart() {
+  @Override public void onStart() {
     super.onStart();
   }
 
-  @Override
-  public void onStop() {
+  @Override public void onStop() {
     super.onStop();
   }
 
