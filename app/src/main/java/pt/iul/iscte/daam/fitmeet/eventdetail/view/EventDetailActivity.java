@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet.eventdetail;
+package pt.iul.iscte.daam.fitmeet.eventdetail.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,7 +32,7 @@ public class EventDetailActivity extends AppCompatActivity {
     // Get the requested event id
     String eventId = getIntent().getStringExtra(EXTRA_EVENT_ID);
 
-    //initFragment(EventDetailFragment.newInstance(eventId));
+    initFragment(EventDetailFragment.newInstance(eventId));
   }
 
   @Override public boolean onSupportNavigateUp() {
