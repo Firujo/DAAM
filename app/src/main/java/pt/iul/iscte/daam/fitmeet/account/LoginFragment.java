@@ -103,7 +103,7 @@ public class LoginFragment extends FragmentView implements LoginView {
   }
 
   @Override public void showLoginSuccessfulToast() {
-    Toast.makeText(getActivity(), R.string.successful_login, Toast.LENGTH_SHORT).show();
+    getActivity().onBackPressed();
   }
 
   @Override public void showErrorToast(int error) {
