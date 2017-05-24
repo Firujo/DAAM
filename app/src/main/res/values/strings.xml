@@ -35,5 +35,10 @@
 
   <string name="welcome_message">Welcome %1$s</string>
   <string name="logout">Logout</string>
+  <string name="event_detail_runners">Runners</string>
+  <string name="event_detail_distance_km">%s KM</string>
+  <string name="event_detail_distance">Distance</string>
+  <string name="event_detail_messages">Messages</string>
+  <string name="event_detail_join">Join</string>
 
 </resources>

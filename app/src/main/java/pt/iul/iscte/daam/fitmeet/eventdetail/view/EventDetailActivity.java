@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import pt.iul.iscte.daam.fitmeet.R;
 
 /**
@@ -20,19 +19,21 @@ public class EventDetailActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    //setContentView(R.layout.activity_detail);
+    setContentView(R.layout.activity_event_detail);
 
-    // Set up the toolbar.
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    ActionBar ab = getSupportActionBar();
-    ab.setDisplayHomeAsUpEnabled(true);
-    ab.setDisplayShowHomeEnabled(true);
+    setupActionBar();
 
     // Get the requested event id
     String eventId = getIntent().getStringExtra(EXTRA_EVENT_ID);
 
     initFragment(EventDetailFragment.newInstance(eventId));
+  }
+
+  private void setupActionBar() {
+    ActionBar ab = getSupportActionBar();
+    ab.setTitle(getResources().getString(R.string.new_event));
+    ab.setDisplayHomeAsUpEnabled(true);
+    ab.setDisplayShowHomeEnabled(true);
   }
 
   @Override public boolean onSupportNavigateUp() {
