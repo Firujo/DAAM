@@ -25,16 +25,6 @@ public class SignUpOrLoginFragment extends Fragment {
     return new SignUpOrLoginFragment();
   }
 
-  @Override public void onAttach(Context context) {
-    super.onAttach(context);
-
-    if (context instanceof AccountFragmentListener) {
-      signUpOrLoginFragmentListener = (AccountFragmentListener) context;
-    } else {
-      throw new RuntimeException(
-          context.toString() + " must implement OnFragmentInteractionListener");
-    }
-  }
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -66,14 +56,14 @@ public class SignUpOrLoginFragment extends Fragment {
   }
 
   private void initLoginFragment(LoginFragment loginFragment) {
-    FragmentManager fragmentManager = getChildFragmentManager();
+    FragmentManager fragmentManager = getFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.replace(R.id.accountFrameLayout, loginFragment);
     transaction.commit();
   }
 
   private void initRegisterFragment(RegisterFragment registerFragment) {
-    FragmentManager fragmentManager = getChildFragmentManager();
+    FragmentManager fragmentManager = getFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.replace(R.id.accountFrameLayout, registerFragment);
     transaction.commit();
