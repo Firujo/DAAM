@@ -8,6 +8,14 @@ import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 
 public class LoggedInPresenter implements FragmentPresenter {
 
+  private LoggedInView view;
+  private LoginStatusManager loginStatusManager;
+
+  public LoggedInPresenter(LoggedInView view, LoginStatusManager loginStatusManager) {
+    this.view = view;
+    this.loginStatusManager = loginStatusManager;
+  }
+
   @Override public void onCreate() {
 
   }
@@ -38,5 +46,10 @@ public class LoggedInPresenter implements FragmentPresenter {
 
   @Override public void onViewCreated() {
 
+  }
+
+  public void pressedLogout() {
+    loginStatusManager.logout();
+    view.finish();
   }
 }

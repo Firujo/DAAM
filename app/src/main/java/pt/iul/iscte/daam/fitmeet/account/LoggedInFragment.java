@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
 public class LoggedInFragment extends FragmentView implements LoggedInView {
@@ -24,8 +24,11 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
   public LoggedInFragment() {
   }
 
-  public static LoggedInFragment newInstance() {
+  public static LoggedInFragment newInstance(String name) {
     LoggedInFragment fragment = new LoggedInFragment();
+    Bundle args = new Bundle();
+    args.putString("username", name);
+    fragment.setArguments(args);
     return fragment;
   }
 
@@ -38,7 +41,23 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
     View view = inflater.inflate(R.layout.fragment_logged_in, container, false);
     bindViews(view);
 
+    setupListeners();
+    setupWelcomeMessage();
     return view;
+  }
+
+  private void setupWelcomeMessage() {
+    Bundle args = getArguments();
+    welcomeMessage.setText(
+        getResources().getString(R.string.welcome_message, args.getString("username")));
+  }
+
+  private void setupListeners() {
+    logoutButton.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        presenter.pressedLogout();
+      }
+    });
   }
 
   private void bindViews(View view) {
@@ -47,9 +66,15 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    presenter = new LoggedInPresenter();
+    presenter = new LoggedInPresenter(this, LoginStatusManager.getInstance(
+        getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE)));
     attachPresenter(presenter);
     super.onViewCreated(view, savedInstanceState);
+  }
+
+  @Override public void finish() {
+    getActivity().onBackPressed();
   }
 
   public interface OnFragmentInteractionListener {
