@@ -7,5 +7,5 @@ package pt.iul.iscte.daam.fitmeet.account;
 interface AccountActivityView {
   void navigateToSignUpOrLogin();
 
-  void navigateToLoggedIn();
+  void navigateToLoggedIn(String name);
 }
