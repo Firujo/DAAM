@@ -36,7 +36,6 @@ public class MemoryEventsRepository implements EventsRepository {
 
   @Override
   public void getEvent(@NonNull final String noteId, @NonNull final GetEventCallback callback) {
-    // Load notes matching the id always directly from the API.
     mEventsServiceApi.getEvent(noteId, new EventsServiceApi.EventsServiceCallback<Event>() {
       @Override public void onLoaded(Event note) {
         callback.onEventLoaded(note);
