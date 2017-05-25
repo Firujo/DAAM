@@ -57,18 +57,20 @@ public class EventDetailPresenter implements EventDetailContract.UserActionsList
 
     eventsRepository.getEvent(eventId, event -> {
       eventsDetailView.setLoadingIndicator(false);
-      showEvent(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
-          "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-          Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
-          "http://smalldata.io/startup/common-files/icons/sdl_logo.png")));
+      showEvent(
+          new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
+              "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+              Difficulty.MEDIUM, new User(1, "jonenz", "jonenz@richenz.comenz",
+              "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public"));
     });
   }
 
   private void showEvent(Event event) {
     String title = event.getTitle();
     String location = event.getLocation();
-    String numberOfRunnes = String.valueOf(event.getNumberOfLikes());
+    String numberOfAttendees = String.valueOf(event.getNumberOfAttendees());
     String featureGraphicUrl = event.getImageUrl();
+    String privacy = event.getPrivacy();
 
     if (Strings.isNullOrEmpty(title)) {
       eventsDetailView.hideEventDetailTitle();
@@ -82,10 +84,10 @@ public class EventDetailPresenter implements EventDetailContract.UserActionsList
       eventsDetailView.showEventDetailLocation(location);
     }
 
-    if (Strings.isNullOrEmpty(numberOfRunnes)) {
+    if (Strings.isNullOrEmpty(numberOfAttendees)) {
       eventsDetailView.showEventDetailNumberOfRunners("-");
     } else {
-      eventsDetailView.showEventDetailNumberOfRunners(numberOfRunnes);
+      eventsDetailView.showEventDetailNumberOfRunners(numberOfAttendees);
     }
 
     if (Strings.isNullOrEmpty(featureGraphicUrl)) {
@@ -93,5 +95,8 @@ public class EventDetailPresenter implements EventDetailContract.UserActionsList
     } else {
       eventsDetailView.showEventDetailFeatureGraphic(featureGraphicUrl);
     }
+    eventsDetailView.showEventDetailPrivacy(privacy);
+    eventsDetailView.showEventDetailMessagesNumber(String.valueOf(event.getMessagesNumber()));
+    eventsDetailView.showEventDetailDistance(String.valueOf(event.getDistanceKm()));
   }
 }

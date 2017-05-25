@@ -29,6 +29,12 @@ public interface EventDetailContract {
     void showEventDetailNumberOfRunners(String numberOfRunners);
 
     void showEventDetailFeatureGraphic(String featureGraphicUrl);
+
+    void showEventDetailDistance(String distanceKm);
+
+    void showEventDetailMessagesNumber(String messagesNumber);
+
+    void showEventDetailPrivacy(String privacy);
   }
 
   interface UserActionsListener extends Presenter{

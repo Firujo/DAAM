@@ -47,7 +47,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     viewHolder.title.setText(event.getTitle());
     viewHolder.description.setText(event.getDescription());
     viewHolder.location.setText(event.getLocation());
-    viewHolder.numberOfLikes.setText((String.valueOf(event.getNumberOfLikes())));
+    viewHolder.numberOfAttendees.setText((String.valueOf(event.getNumberOfAttendees())));
     Picasso.with(viewHolder.userAvatar.getContext())
         .load(event.getOwner().getAvatarUrl())
         .fit()
@@ -84,7 +84,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public ImageView userAvatar;
     public TextView userName;
     public TextView description;
-    public TextView numberOfLikes;
+    public TextView numberOfAttendees;
     public TextView location;
     public TextView timestamp;
 
@@ -96,7 +96,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
       title = (TextView) itemView.findViewById(R.id.event_detail_title);
       userAvatar = (ImageView) itemView.findViewById(R.id.user_avatar);
       userName = (TextView) itemView.findViewById(R.id.user_name);
-      numberOfLikes = (TextView) itemView.findViewById(R.id.number_of_likes);
+      numberOfAttendees = (TextView) itemView.findViewById(R.id.number_of_likes);
       location = (TextView) itemView.findViewById(R.id.event_location);
       timestamp = (TextView) itemView.findViewById(R.id.timestamp);
       description = (TextView) itemView.findViewById(R.id.event_detail_description);

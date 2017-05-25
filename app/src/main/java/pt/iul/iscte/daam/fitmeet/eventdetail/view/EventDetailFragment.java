@@ -30,7 +30,7 @@ public class EventDetailFragment extends Fragment implements EventDetailContract
   private TextView eventTitle;
   private TextView numberOfRunners;
   private TextView distanceKm;
-  private TextView numberOfMessages;
+  private TextView messagesNumber;
   private Button joinButton;
   private TextView location;
   private TextView privacy;
@@ -78,7 +78,7 @@ public class EventDetailFragment extends Fragment implements EventDetailContract
     privacy = (TextView) view.findViewById(R.id.event_detail_privacy);
     numberOfRunners = (TextView) view.findViewById(R.id.event_detail_number_of_runners);
     distanceKm = (TextView) view.findViewById(R.id.event_detail_distance_km);
-    numberOfMessages = (TextView) view.findViewById(R.id.event_detail_messages_number);
+    messagesNumber = (TextView) view.findViewById(R.id.event_detail_messages_number);
     joinButton = (Button) view.findViewById(R.id.event_detail_join_button);
   }
 
@@ -129,9 +129,18 @@ public class EventDetailFragment extends Fragment implements EventDetailContract
   }
 
   @Override public void showEventDetailFeatureGraphic(String featureGraphicUrl) {
-    Picasso.with(getContext())
-        .load(featureGraphicUrl)
-        .fit()
-        .into(this.featureGraphic, null);
+    Picasso.with(getContext()).load(featureGraphicUrl).fit().into(this.featureGraphic, null);
+  }
+
+  @Override public void showEventDetailDistance(String distanceKm) {
+    this.distanceKm.setText(getString(R.string.event_detail_distance_km, distanceKm));
+  }
+
+  @Override public void showEventDetailMessagesNumber(String messagesNumber) {
+    this.messagesNumber.setText(messagesNumber);
+  }
+
+  @Override public void showEventDetailPrivacy(String privacy) {
+    this.privacy.setText(privacy);
   }
 }
