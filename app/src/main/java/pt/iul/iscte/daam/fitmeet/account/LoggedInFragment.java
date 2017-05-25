@@ -24,11 +24,8 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
   public LoggedInFragment() {
   }
 
-  public static LoggedInFragment newInstance(String name) {
+  public static LoggedInFragment newInstance() {
     LoggedInFragment fragment = new LoggedInFragment();
-    Bundle args = new Bundle();
-    args.putString("username", name);
-    fragment.setArguments(args);
     return fragment;
   }
 
@@ -42,14 +39,7 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
     bindViews(view);
 
     setupListeners();
-    setupWelcomeMessage();
     return view;
-  }
-
-  private void setupWelcomeMessage() {
-    Bundle args = getArguments();
-    welcomeMessage.setText(
-        getResources().getString(R.string.welcome_message, args.getString("username")));
   }
 
   private void setupListeners() {
@@ -75,6 +65,10 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
 
   @Override public void finish() {
     getActivity().onBackPressed();
+  }
+
+  @Override public void setupWelcomeMessage(String name) {
+    welcomeMessage.setText(getResources().getString(R.string.welcome_message, name));
   }
 
   public interface OnFragmentInteractionListener {

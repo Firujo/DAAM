@@ -45,7 +45,8 @@ public class LoggedInPresenter implements FragmentPresenter {
   }
 
   @Override public void onViewCreated() {
-
+    String name = loginStatusManager.getLoginName();
+    view.setupWelcomeMessage(name);
   }
 
   public void pressedLogout() {

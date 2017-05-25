@@ -18,16 +18,13 @@ public class AccountPresenter implements Presenter {
   }
 
   private void getLoginStatus() {
-    loginStatusManager.checkLoginStatus(new LoginStatusListener() {
-      @Override public void isLoggedIn(String name) {
-        view.navigateToLoggedIn(name);
-      }
+    boolean isLoggedIn = loginStatusManager.isLoggedIn();
+    if (isLoggedIn) {
+      view.navigateToLoggedIn();
+    } else {
+      view.navigateToSignUpOrLogin();
+    }
 
-      @Override public void notLoggedIn() {
-        view.navigateToSignUpOrLogin();
-      }
-
-    });
   }
 
   @Override public void onCreate() {
@@ -52,11 +49,5 @@ public class AccountPresenter implements Presenter {
 
   @Override public void onStart() {
 
-  }
-
-  interface LoginStatusListener {
-    void isLoggedIn(String name);
-
-    void notLoggedIn();
   }
 }

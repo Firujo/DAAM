@@ -1,9 +1,11 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,9 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
+import pt.iul.iscte.daam.fitmeet.account.LoginStatusManager;
 import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
@@ -46,7 +51,9 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     super.onCreate(savedInstanceState);
     EventsRepository eventsRepository =
         EventRepositories.getInMemoryRepoInstance(new EventsServiceApiImplementation());
-    mActionsListener = new EventsPresenter(eventsRepository, this);
+    mActionsListener = new EventsPresenter(eventsRepository, LoginStatusManager.getInstance(
+        getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE)), this);
     mListAdapter = new EventsAdapter(new ArrayList<>(0), mItemListener);
   }
 
@@ -100,6 +107,18 @@ public class EventsFragment extends Fragment implements EventsContract.View {
 
     // Make sure setRefreshing() is called after the layout is done with everything else.
     swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(showProgress));
+  }
+
+  @Override public void setLoginInformation(String email) {
+    NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+    TextView textView =
+        (TextView) navigationView.getHeaderView(0).findViewById(R.id.email_information);
+    textView.setText(email);
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    mActionsListener.onResume();
   }
 
   public interface EventItemListener {

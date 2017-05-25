@@ -8,6 +8,7 @@ import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
  */
 
 public class LoginStatusManager {
+
   private static LoginStatusManager instance;
   private SharedPreferences sharedPreferences;
 
@@ -22,14 +23,8 @@ public class LoginStatusManager {
     return instance;
   }
 
-  public void checkLoginStatus(AccountPresenter.LoginStatusListener listener) {
-    boolean status = sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
-    if (status) {
-      String name = sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
-      listener.isLoggedIn(name);
-    } else {
-      listener.notLoggedIn();
-    }
+  public boolean isLoggedIn() {
+    return sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
   }
 
   public void saveLoginStatus(String username, String password) {
@@ -42,5 +37,16 @@ public class LoginStatusManager {
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_STATUS).apply();
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_EMAIL).apply();
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PASSWORD).apply();
+  }
+
+  public String getLoginName() {
+    return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
+  }
+
+  public String getLoginNameForDrawer() {
+    if (isLoggedIn()) {
+      return getLoginName();
+    }
+    return "";
   }
 }

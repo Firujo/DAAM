@@ -18,6 +18,8 @@ public interface EventsContract {
     void showEventDetails(long id);
 
     void setProgressIndicator(boolean showProgress);
+
+    void setLoginInformation(String email);
   }
 
   interface UserActionsListener {
@@ -27,5 +29,7 @@ public interface EventsContract {
     void addNewEvent();
 
     void openEventDetails(@NonNull Event clickedEvent);
+
+    void onResume();
   }
 }
