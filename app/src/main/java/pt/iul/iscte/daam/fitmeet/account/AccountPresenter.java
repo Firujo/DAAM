@@ -50,8 +50,4 @@ public class AccountPresenter implements Presenter {
   @Override public void onStart() {
 
   }
-
-  public interface LoginStatusListener {
-    void isLoggedIn(boolean isLoggedIn);
-  }
 }
