@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     >
 
   <LinearLayout
@@ -14,16 +15,28 @@
         android:id="@+id/event_detail_feature_graphic"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:layout_marginBottom="30dp"
+
         android:background="@color/cardview_dark_background"
         />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grey_light"
+        android:gravity="center_vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/event_detail_info_label"
+        android:textAllCaps="true"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
+        />
     <TextView
         android:id="@+id/event_detail_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
         tools:text="Hora do Esquilo"
         style="@style/Base.TextAppearance.AppCompat.Title"
         />
@@ -154,11 +167,45 @@
         android:id="@+id/event_detail_join_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:text="@string/event_detail_join"
         style="@style/Base.Widget.AppCompat.Button.Colored"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grey_light"
+        android:gravity="center_vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/event_detail_route"
+        android:textAllCaps="true"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/colorPrimary"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grey_light"
+        android:gravity="center_vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/event_detail_messages"
+        android:textAllCaps="true"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
+        />
   </LinearLayout>
 </ScrollView>

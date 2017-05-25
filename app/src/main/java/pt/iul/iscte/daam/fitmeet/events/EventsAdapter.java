@@ -48,7 +48,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     viewHolder.description.setText(event.getDescription());
     viewHolder.location.setText(event.getLocation());
     viewHolder.numberOfLikes.setText((String.valueOf(event.getNumberOfLikes())));
-    Picasso.with(viewHolder.userAvatar.getContext()).setLoggingEnabled(true);
     Picasso.with(viewHolder.userAvatar.getContext())
         .load(event.getOwner().getAvatarUrl())
         .fit()
