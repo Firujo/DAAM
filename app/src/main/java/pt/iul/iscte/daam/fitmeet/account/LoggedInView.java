@@ -7,4 +7,6 @@ package pt.iul.iscte.daam.fitmeet.account;
 interface LoggedInView {
 
   void finish();
+
+  void setupWelcomeMessage(String name);
 }

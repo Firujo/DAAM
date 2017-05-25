@@ -24,12 +24,8 @@ public class LoginStatusManager {
 
   public void checkLoginStatus(AccountPresenter.LoginStatusListener listener) {
     boolean status = sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
-    if (status) {
-      String name = sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
-      listener.isLoggedIn(name);
-    } else {
-      listener.notLoggedIn();
-    }
+    listener.isLoggedIn(status);
+
   }
 
   public void saveLoginStatus(String username, String password) {
@@ -42,5 +38,9 @@ public class LoginStatusManager {
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_STATUS).apply();
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_EMAIL).apply();
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PASSWORD).apply();
+  }
+
+  public String getLoginName() {
+    return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
   }
 }

@@ -58,7 +58,8 @@ public class AccountActivity extends View
     initFragment(SignUpOrLoginFragment.newInstance());
   }
 
-  @Override public void navigateToLoggedIn(String name) {
-    initFragment(LoggedInFragment.newInstance(name));
+  @Override public void navigateToLoggedIn() {
+    initFragment(LoggedInFragment.newInstance());
+
   }
 }
