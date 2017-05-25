@@ -8,6 +8,7 @@ import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
  */
 
 public class LoginStatusManager {
+
   private static LoginStatusManager instance;
   private SharedPreferences sharedPreferences;
 
@@ -40,5 +41,12 @@ public class LoginStatusManager {
 
   public String getLoginName() {
     return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
+  }
+
+  public String getLoginNameForDrawer() {
+    if (isLoggedIn()) {
+      return getLoginName();
+    }
+    return "";
   }
 }

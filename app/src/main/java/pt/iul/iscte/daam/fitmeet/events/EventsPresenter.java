@@ -1,9 +1,11 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import pt.iul.iscte.daam.fitmeet.account.LoginStatusManager;
 import pt.iul.iscte.daam.fitmeet.data.Difficulty;
 import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
@@ -14,11 +16,14 @@ import pt.iul.iscte.daam.fitmeet.data.User;
  */
 public class EventsPresenter implements EventsContract.UserActionsListener {
   private final EventsRepository mEventsRepository;
+  private LoginStatusManager loginStatusManager;
   private final EventsContract.View mEventsView;
 
   public EventsPresenter(@NonNull EventsRepository mEventsRepository,
+      LoginStatusManager loginStatusManager,
       @NonNull EventsContract.View eventsView) {
     this.mEventsRepository = mEventsRepository;
+    this.loginStatusManager = loginStatusManager;
     this.mEventsView = eventsView;
   }
 
@@ -79,5 +84,12 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
 
   @Override public void openEventDetails(@NonNull Event requestedEvent) {
     mEventsView.showEventDetails(requestedEvent.getId());
+  }
+
+  @Override public void onResume() {
+    String email = loginStatusManager.getLoginNameForDrawer();
+    if (!TextUtils.isEmpty(email)) {
+      mEventsView.setLoginInformation(email);
+    }
   }
 }
