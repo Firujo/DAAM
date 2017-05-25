@@ -22,10 +22,8 @@ public class LoginStatusManager {
     return instance;
   }
 
-  public void checkLoginStatus(AccountPresenter.LoginStatusListener listener) {
-    boolean status = sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
-    listener.isLoggedIn(status);
-
+  public boolean isLoggedIn() {
+    return sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
   }
 
   public void saveLoginStatus(String username, String password) {
