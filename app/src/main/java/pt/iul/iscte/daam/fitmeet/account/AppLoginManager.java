@@ -69,9 +69,10 @@ public class AppLoginManager {
     int validationResult = validateLogin(username, password);
     if (validationResult != VALID_FIELDS) {
       loginListener.onError(validationResult);
+    } else {
+      signIn(username, password, loginListener);
     }
 
-    signIn(username, password, loginListener);
   }
 
   private void signIn(String username, String password, LoginListener loginListener) {
