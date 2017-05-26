@@ -7,18 +7,21 @@ import java.util.Date;
  */
 
 public class Event {
-  private final long id;
-  private final String location;
-  private final User owner;
+  private long id;
+  private String location;
+  private User owner;
   private String privacy;
   private String description;
   private String title;
   private Date date;
   private String imageUrl;
-  private Enum<Difficulty> difficulty;
+  private String difficulty;
   private int messagesNumber;
   private int distanceKm;
   private int numberOfAttendees;
+
+  public Event() {
+  }
 
   public Event(long id, String description, String title, Date date, String location,
       int numberOfAttendees, String imageUrl, Enum<Difficulty> difficulty, User owner,
@@ -31,7 +34,7 @@ public class Event {
     this.location = location;
     this.numberOfAttendees = numberOfAttendees;
     this.imageUrl = imageUrl;
-    this.difficulty = difficulty;
+    //this.difficulty = difficulty;
     this.owner = owner;
     this.messagesNumber = messagesNumber;
     this.distanceKm = distanceKm;
@@ -65,6 +68,10 @@ public class Event {
     return id;
   }
 
+  public void setId(long id) {
+    this.id = id;
+  }
+
   public String getDescription() {
     return description;
   }
@@ -89,11 +96,11 @@ public class Event {
     this.imageUrl = imageUrl;
   }
 
-  public Enum<Difficulty> getDifficulty() {
+  public String getDifficulty() {
     return difficulty;
   }
 
-  public void setDifficulty(Enum<Difficulty> difficulty) {
+  public void setDifficulty(String difficulty) {
     this.difficulty = difficulty;
   }
 
@@ -109,8 +116,16 @@ public class Event {
     return owner;
   }
 
+  public void setOwner(User owner) {
+    this.owner = owner;
+  }
+
   public String getLocation() {
     return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 
   public int getNumberOfAttendees() {

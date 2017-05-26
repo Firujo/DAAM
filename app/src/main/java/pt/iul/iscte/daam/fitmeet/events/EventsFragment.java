@@ -15,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.util.ArrayList;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+import com.google.firebase.database.Query;
 import java.util.List;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
@@ -32,12 +36,9 @@ import pt.iul.iscte.daam.fitmeet.newevent.view.NewEventActivity;
  */
 public class EventsFragment extends Fragment implements EventsContract.View {
   private EventsContract.UserActionsListener mActionsListener;
-  EventItemListener mItemListener = new EventItemListener() {
-    @Override public void onEventClick(Event clickedEvent) {
-      mActionsListener.openEventDetails(clickedEvent);
-    }
-  };
-  private EventsAdapter mListAdapter;
+  private DatabaseReference mDatabase;
+  private FirebaseRecyclerAdapter<Event, ViewHolder> mAdapter;
+  private RecyclerView mRecycler;
 
   public EventsFragment() {
 
@@ -47,6 +48,33 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     return new EventsFragment();
   }
 
+  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+    // Set up FirebaseRecyclerAdapter with the Query
+    Query postsQuery = getQuery(mDatabase);
+    mAdapter = new FirebaseRecyclerAdapter<Event, ViewHolder>(Event.class,
+        R.layout.item_event, ViewHolder.class, postsQuery) {
+      @Override protected void populateViewHolder(final ViewHolder viewHolder,
+          final Event model, final int position) {
+        final DatabaseReference postRef = getRef(position);
+
+        // Set click listener for the whole post view
+        final String eventId = postRef.getKey();
+        viewHolder.itemView.setOnClickListener(v -> {
+          // Launch EventDetailActivity
+          Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+          intent.putExtra(EventDetailActivity.EXTRA_EVENT_ID, eventId);
+          startActivity(intent);
+        });
+
+        // Bind Post to ViewHolder, setting OnClickListener for the star button
+        viewHolder.bindToPost(model);
+      }
+    };
+    mRecycler.setAdapter(mAdapter);
+  }
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     EventsRepository eventsRepository =
@@ -54,19 +82,17 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     mActionsListener = new EventsPresenter(eventsRepository, LoginStatusManager.getInstance(
         getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
             Context.MODE_PRIVATE)), this);
-    mListAdapter = new EventsAdapter(new ArrayList<>(0), mItemListener);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_main, container, false);
-    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.events_list);
-    recyclerView.setAdapter(mListAdapter);
 
+    mRecycler = (RecyclerView) view.findViewById(R.id.events_list);
+    mRecycler.setHasFixedSize(true);
+    mDatabase = FirebaseDatabase.getInstance().getReference();
     int numColumns = getContext().getResources().getInteger(R.integer.num_events_columns);
-
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
+    mRecycler.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
 
     FloatingActionButton fab =
         (FloatingActionButton) getActivity().findViewById(R.id.fab_add_event);
@@ -85,7 +111,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
   }
 
   @Override public void showEvents(List<Event> events) {
-    mListAdapter.refreshData(events);
+    //mListAdapter.refreshData(events);
   }
 
   @Override public void showAddEvent() {
@@ -121,7 +147,7 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     mActionsListener.onResume();
   }
 
-  public interface EventItemListener {
-    void onEventClick(Event clickedEvent);
+  public Query getQuery(DatabaseReference databaseReference) {
+    return databaseReference.child("Events");
   }
 }

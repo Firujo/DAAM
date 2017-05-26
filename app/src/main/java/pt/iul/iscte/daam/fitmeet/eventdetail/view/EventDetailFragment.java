@@ -3,6 +3,7 @@ package pt.iul.iscte.daam.fitmeet.eventdetail.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.data.Event;
 import pt.iul.iscte.daam.fitmeet.data.EventRepositories;
 import pt.iul.iscte.daam.fitmeet.data.EventsRepository;
 import pt.iul.iscte.daam.fitmeet.data.EventsServiceApiImplementation;
@@ -34,6 +41,7 @@ public class EventDetailFragment extends Fragment implements EventDetailContract
   private Button joinButton;
   private TextView location;
   private TextView privacy;
+  private DatabaseReference mEventReference;
 
   public static Fragment newInstance(String eventId) {
     Bundle arguments = new Bundle();
@@ -51,6 +59,40 @@ public class EventDetailFragment extends Fragment implements EventDetailContract
     EventsRepository eventsRepository =
         EventRepositories.getInMemoryRepoInstance(new EventsServiceApiImplementation());
     presenter = new EventDetailPresenter(eventId, this, eventsRepository);
+    // Initialize Database
+    mEventReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId);
+  }
+
+  @Override public void onStart() {
+    super.onStart();
+
+    // Add value event listener to the post
+    // [START post_value_event_listener]
+    ValueEventListener eventListener = new ValueEventListener() {
+      @Override public void onDataChange(DataSnapshot dataSnapshot) {
+        // Get Post object and use the values to update the UI
+        Event event = dataSnapshot.getValue(Event.class);
+        // [START_EXCLUDE]
+        Picasso.with(getContext()).load(event.getImageUrl()).fit().into(featureGraphic, null);
+        eventTitle.setText(event.getTitle());
+        location.setText(event.getLocation());
+        privacy.setText(event.getPrivacy());
+        numberOfRunners.setText(String.valueOf(event.getNumberOfAttendees()));
+        distanceKm.setText(String.valueOf(event.getDistanceKm()));
+        // [END_EXCLUDE]
+      }
+
+      @Override public void onCancelled(DatabaseError databaseError) {
+        // Getting Post failed, log a message
+        Log.w(this.getClass().getCanonicalName(), "loadPost:onCancelled",
+            databaseError.toException());
+        // [START_EXCLUDE]
+        Toast.makeText(getContext(), "Failed to load post.", Toast.LENGTH_SHORT).show();
+        // [END_EXCLUDE]
+      }
+    };
+    mEventReference.addValueEventListener(eventListener);
+    // [END post_value_event_listener]
   }
 
   private void loadExtras(Bundle arguments) {
