@@ -17,13 +17,14 @@
       android:layout_gravity="center_horizontal"
       />
 
-  <Button
+  <android.support.v7.widget.AppCompatButton
       android:id="@+id/logoutButton"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="10dp"
       android:text="@string/logout"
       android:layout_gravity="center_horizontal"
+      style="@style/Base.Widget.AppCompat.Button.Colored"
       />
 
 </LinearLayout>
