@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.data.Event;
 
@@ -22,7 +23,7 @@ import pt.iul.iscte.daam.fitmeet.data.Event;
  */
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
   private final EventsFragment.EventItemListener itemListener;
-  DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+  //DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
   private List<Event> mEvents;
 
   public EventsAdapter(ArrayList<Event> events, EventsFragment.EventItemListener itemListener) {
@@ -62,7 +63,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
           }
         });
     viewHolder.userName.setText(event.getOwner().getName());
-    viewHolder.timestamp.setText(dateFormat.format(event.getDate()));
+    viewHolder.timestamp.setText(event.getDate().toString());
   }
 
   @Override public int getItemCount() {
