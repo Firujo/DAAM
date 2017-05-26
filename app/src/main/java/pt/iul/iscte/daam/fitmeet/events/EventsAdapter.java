@@ -23,7 +23,7 @@ import pt.iul.iscte.daam.fitmeet.data.Event;
  */
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
   private final EventsFragment.EventItemListener itemListener;
-  //DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+  private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
   private List<Event> mEvents;
 
   public EventsAdapter(ArrayList<Event> events, EventsFragment.EventItemListener itemListener) {
@@ -63,7 +63,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
           }
         });
     viewHolder.userName.setText(event.getOwner().getName());
-    viewHolder.timestamp.setText(event.getDate().toString());
+    viewHolder.timestamp.setText(dateFormat.format(event.getDate()));
   }
 
   @Override public int getItemCount() {
