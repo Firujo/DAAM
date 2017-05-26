@@ -96,7 +96,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
         //db.getDatabase().setValue("Hello world!");
         //db.getDatabase().push()
           db = new FireBDatabase("Events");
-          db.newEvent(1, "Correr com os patos faz bem.", "Corrida dos patos", new Date(), "Mafra", 2, "none", Difficulty.ADVANCED, new User(1, "Bruno", "boss@b.pt","url"));
+          db.newEvent(1, "Correr com os patos faz bem.", "Corrida dos patos", new Date(), "Mafra", 2, "none", Difficulty.ADVANCED.toString(), new User(1, "Bruno", "boss@b.pt","url"));
 
         Toast.makeText(FirebaseTestActivity.this, "BOOP", Toast.LENGTH_SHORT).show();
       }

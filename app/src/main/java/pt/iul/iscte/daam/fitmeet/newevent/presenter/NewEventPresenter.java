@@ -39,6 +39,7 @@ public class NewEventPresenter implements NewEventContract.UserActionsListener {
   @Override public void saveEvent(String title, String description) {
     try {
       newEventDataValidator.validate(title, description);
+      newEventView.submitEvent();
       newEventView.showNewEventSuccess();
     } catch (NewEventValidationException e) {
       newEventView.showNewEventError();

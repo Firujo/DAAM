@@ -14,6 +14,8 @@ public interface NewEventContract {
     void showDifficultyPicker();
 
     void showDatePicker();
+
+    void submitEvent();
   }
 
   interface UserActionsListener {

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +19,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.data.Difficulty;
+import pt.iul.iscte.daam.fitmeet.data.Event;
+import pt.iul.iscte.daam.fitmeet.data.User;
 import pt.iul.iscte.daam.fitmeet.newevent.model.NewEventDataValidator;
 import pt.iul.iscte.daam.fitmeet.newevent.presenter.NewEventContract;
 import pt.iul.iscte.daam.fitmeet.newevent.presenter.NewEventPresenter;
@@ -40,11 +53,22 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   private Drawable defaultBackground;
   private Button datePicker;
 
+  // [START declare_database_ref]
+  private DatabaseReference mDatabase;
+  // [END declare_database_ref]
+
   public NewEventFragment() {
   }
 
   public static NewEventFragment newInstance() {
     return new NewEventFragment();
+  }
+
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    // [START initialize_database_ref]
+    mDatabase = FirebaseDatabase.getInstance().getReference();
+    // [END initialize_database_ref]
   }
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,6 +176,69 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     buttonNegative.setOnClickListener(v -> dialog.dismiss());
     dialog.show();
   }
+
+  @Override public void submitEvent() {
+    final String title = this.title.getText().toString();
+    final String description = this.description.getText().toString();
+
+    //// Title is required
+    //if (Strings.isNullOrEmpty(title)) {
+    //  mTitleField.setError(REQUIRED);
+    //  return;
+    //}
+    //
+    //// Body is required
+    //if (TextUtils.isEmpty(body)) {
+    //  mBodyField.setError(REQUIRED);
+    //  return;
+    //}
+
+    // Disable button so there are no multi-posts
+    //setEditingEnabled(false);
+    Toast.makeText(getContext(), "Posting...", Toast.LENGTH_SHORT).show();
+
+    // [START single_value_read]
+    //final String userId = getUid();
+    mDatabase.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override public void onDataChange(DataSnapshot dataSnapshot) {
+
+          createNewEvent(title, description);
+
+
+        // Finish this Activity, back to the stream
+        //setEditingEnabled(true);
+        getActivity().finish();
+        // [END_EXCLUDE]
+      }
+
+      @Override public void onCancelled(DatabaseError databaseError) {
+        Log.w(this.getClass().getCanonicalName(), "getUser:onCancelled",
+            databaseError.toException());
+        // [START_EXCLUDE]
+        //setEditingEnabled(true);
+        // [END_EXCLUDE]
+      }
+    });
+    // [END single_value_read]
+  }
+
+  // [START write_fan_out]
+  private void createNewEvent(String title, String description) {
+    // Create new post at /user-posts/$userid/$postid and at
+    // /posts/$postid simultaneously
+    String key = mDatabase.child("events").push().getKey();
+    Event event = new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
+        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+        Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
+        "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public");
+    Map<String, Object> postValues = event.toMap();
+
+    Map<String, Object> childUpdates = new HashMap<>();
+    childUpdates.put("/Events/" + key, postValues);
+
+    mDatabase.updateChildren(childUpdates);
+  }
+  // [END write_fan_out]
 
   @Override public void showDatePicker() {
     DatePickerFragment newFragment = new DatePickerFragment();
