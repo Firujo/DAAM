@@ -109,6 +109,8 @@ public class LoginFragment extends FragmentView implements LoginView {
   @Override public void showErrorToast(int error) {
     if (error == AppLoginManager.EMPTY_FIELDS) {
       Toast.makeText(getActivity(), R.string.empty_fields, Toast.LENGTH_SHORT).show();
+    } else if (error == AppLoginManager.WRONG_COMBINATION) {
+      Toast.makeText(getActivity(), R.string.invalid_login_combination, Toast.LENGTH_SHORT).show();
     }
   }
 

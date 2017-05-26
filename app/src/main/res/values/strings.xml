@@ -44,5 +44,6 @@
   <string name="event_detail_route">Route</string>
   <string name="event_detail_info_label">Quick Information</string>
   <string name="loading">Loading...</string>
+  <string name="invalid_login_combination">Invalid username and password combination</string>
 
 </resources>

@@ -14,6 +14,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by filipe on 09-04-2017.
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class FacebookLoginManager {
   private FirebaseAuth mAuth;
+  private FirebaseAuth.AuthStateListener mAuthListener;
   private CallbackManager facebookCallbackManager;
 
   public static final int FACEBOOK_LOGIN_ERROR = 0;
@@ -29,8 +31,37 @@ public class FacebookLoginManager {
     this.mAuth = mAuth;
   }
 
+  public void setupAuthListener() {
+    mAuthListener = new FirebaseAuth.AuthStateListener() {
+      @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+          System.out.println("facebook login");
+          if (user.isEmailVerified()) {
+            System.out.println("Email is verified");
+            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+            System.out.println(user.getDisplayName());
+          } else {
+            user.sendEmailVerification();
+            System.out.println("Email is not verified");
+          }
+        } else {
+          System.out.println("onAuthStateChanged:signed_out");
+        }
+      }
+    };
+
+    mAuth.addAuthStateListener(mAuthListener);
+  }
+
   public void initializeLoginControls() {
     facebookCallbackManager = CallbackManager.Factory.create();
+  }
+
+  public void removeAuthListener() {
+    if (mAuthListener != null) {
+      mAuth.removeAuthStateListener(mAuthListener);
+    }
   }
 
   public void setupFacebookCallback(FacebookLoginStatusListener statusListener) {
@@ -59,10 +90,10 @@ public class FacebookLoginManager {
             // If sign in fails, display a message to the user. If sign in succeeds
             // the auth state listener will be notified and logic to handle the
             // signed in user can be handled in the listener.
-            if (!task.isSuccessful()) {
-              System.out.println("could not login facebook");
-            } else {
+            if (task.isSuccessful()) {
               System.out.println("Logged in facebook;");
+            } else {
+              System.out.println("could not login facebook");
             }
           }
         });
@@ -70,6 +101,10 @@ public class FacebookLoginManager {
 
   public void onResult(int requestCode, int resultCode, Intent data) {
     facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+  }
+
+  public void stop() {
+    removeAuthListener();
   }
 
   interface FacebookLoginStatusListener {
