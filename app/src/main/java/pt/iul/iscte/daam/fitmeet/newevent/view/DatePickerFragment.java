@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by Utilizador on 5/20/2017.
@@ -19,7 +20,7 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment
     implements DatePickerDialog.OnDateSetListener {
 
-  DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
   private Button dateButton;
 
   @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
