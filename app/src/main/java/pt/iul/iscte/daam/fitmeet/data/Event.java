@@ -56,6 +56,7 @@ public class Event {
     result.put("privacy", privacy);
     result.put("date", date);
     result.put("difficulty", difficulty);
+    result.put("location", location);
     return result;
   }
   // [END post_to_map]
