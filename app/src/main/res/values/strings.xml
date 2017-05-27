@@ -50,5 +50,6 @@
   <string name="distance_metric_km">km</string>
 
   <string name="email">Email</string>
+  <string name="introduction_signup">Create fitness events and gather with your friends</string>
 
 </resources>

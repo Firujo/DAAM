@@ -8,4 +8,6 @@ public interface SignUpOrLoginView {
   void openRegisterFragment();
 
   void openLoginFragment();
+
+  void finish();
 }

@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.utils.CircleTransform;
 import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
@@ -19,6 +23,7 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
   private OnFragmentInteractionListener mListener;
   private LoggedInPresenter presenter;
   private TextView welcomeMessage;
+  private ImageView AvatarImageView;
   private Button logoutButton;
 
   public LoggedInFragment() {
@@ -52,13 +57,18 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
 
   private void bindViews(View view) {
     welcomeMessage = (TextView) view.findViewById(R.id.welcome_message);
+    AvatarImageView = (ImageView) view.findViewById(R.id.profile_avatar);
     logoutButton = (Button) view.findViewById(R.id.logoutButton);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    presenter = new LoggedInPresenter(this, LoginStatusManager.getInstance(
+    LoginStatusManager loginStatusManager = LoginStatusManager.getInstance(
         getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
-            Context.MODE_PRIVATE)));
+            Context.MODE_PRIVATE));
+    FacebookLoginManager facebookLoginManager =
+        new FacebookLoginManager(FirebaseAuth.getInstance());
+    presenter =
+        new LoggedInPresenter(this, new LoggedInManager(loginStatusManager, facebookLoginManager));
     attachPresenter(presenter);
     super.onViewCreated(view, savedInstanceState);
   }
@@ -67,8 +77,12 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
     getActivity().onBackPressed();
   }
 
-  @Override public void setupWelcomeMessage(String name) {
+  @Override public void setupWelcomeInformation(String name, String photoUrl) {
     welcomeMessage.setText(getResources().getString(R.string.welcome_message, name));
+    Uri uri = Uri.parse(photoUrl);
+    Picasso.with(getActivity()).load(uri)
+        .transform(new CircleTransform())
+        .into(AvatarImageView);
   }
 
   public interface OnFragmentInteractionListener {

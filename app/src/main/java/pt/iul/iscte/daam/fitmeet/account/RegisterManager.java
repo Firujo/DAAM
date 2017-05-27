@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
+import android.net.Uri;
 import android.net.nsd.NsdManager;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
@@ -38,18 +39,16 @@ public class RegisterManager {
       @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-          UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-              .setDisplayName(name)
-              .build();
-          user.updateProfile(profileUpdates);
-          if (user.isEmailVerified()) {
-            System.out.println("Email is verified");
-            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-            System.out.println(user.getDisplayName());
-
-          } else {
-            user.sendEmailVerification();
-            System.out.println("Email is not verified");
+          if (user.getPhotoUrl() == null) {
+            Uri uri = getDefaultPhotoUri();
+            UserProfileChangeRequest profileUpdates =
+                new UserProfileChangeRequest.Builder().setPhotoUri(uri).build();
+            user.updateProfile(profileUpdates);
+          }
+          if (user.getDisplayName() == null) {
+            UserProfileChangeRequest profile =
+                new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+            user.updateProfile(profile);
           }
           System.out.println("CORRECT AUTHENTICATION AFTER REGISTER !!!!");
         } else {
@@ -59,6 +58,10 @@ public class RegisterManager {
     };
 
     mAuth.addAuthStateListener(mAuthListener);
+  }
+
+  private Uri getDefaultPhotoUri() {
+    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar");
   }
 
   public void removeAuthListener() {

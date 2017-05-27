@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import java.util.ArrayList;
@@ -88,10 +89,10 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
 
   @Override public void onResume() {
     String email = loginStatusManager.getLoginNameForDrawer();
-    if (!TextUtils.isEmpty(email)) {
-      mEventsView.setLoginInformation(email);
-    } else {
-      mEventsView.setLoginInformation("");
-    }
+    mEventsView.setLoginInformation(email);
+
+    String photoURL = loginStatusManager.getPhotoUrlForDrawer();
+    Uri uri = Uri.parse(photoURL);
+    mEventsView.setDrawerAvatar(uri);
   }
 }

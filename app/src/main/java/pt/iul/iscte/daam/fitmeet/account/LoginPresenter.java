@@ -1,6 +1,7 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
 import android.content.Intent;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 
 /**
@@ -51,11 +52,12 @@ public class LoginPresenter implements FragmentPresenter {
 
   @Override public void onStart() {
     appLoginManager.setupAuthListener();
-    facebookLoginManager.setupFacebookCallback(
-        new FacebookLoginManager.FacebookLoginStatusListener() {
+    facebookLoginManager.setupFacebookCallback(new LoginListener() {
 
-          @Override public void onSuccess() {
-            System.out.println("success facebook");
+      @Override public void onSuccess(String email, String photourl, String displayName) {
+        loginStatusManager.saveLoginStatus(email, photourl, displayName,
+            SharedPreferencesUtils.LOGIN_TYPE_FACEBOOK);
+        view.finish();
           }
 
           @Override public void onError(int error) {
@@ -65,11 +67,12 @@ public class LoginPresenter implements FragmentPresenter {
   }
 
   public void pressedLogin(String username, String password) {
-    appLoginManager.login(username, password, new AppLoginManager.LoginListener() {
+    appLoginManager.login(username, password, new LoginListener() {
 
-      @Override public void onSuccess() {
-        view.showLoginSuccessfulToast();
-        loginStatusManager.saveLoginStatus(username, password);
+      @Override public void onSuccess(String email, String photourl, String displayName) {
+        loginStatusManager.saveLoginStatus(email, photourl, displayName,
+            SharedPreferencesUtils.LOGIN_TYPE_APP);
+        view.finish();
 
       }
 
@@ -82,4 +85,11 @@ public class LoginPresenter implements FragmentPresenter {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     facebookLoginManager.onResult(requestCode, resultCode, data);
   }
+
+  interface LoginListener {
+    void onSuccess(String email, String photourl, String displayName);
+
+    void onError(int error);
+  }
+
 }

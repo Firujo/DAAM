@@ -8,5 +8,5 @@ interface LoggedInView {
 
   void finish();
 
-  void setupWelcomeMessage(String name);
+  void setupWelcomeInformation(String name, String photoUrl);
 }

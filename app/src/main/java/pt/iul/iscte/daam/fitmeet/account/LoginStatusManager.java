@@ -1,6 +1,8 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import com.google.firebase.auth.FirebaseAuth;
 import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 
 /**
@@ -27,20 +29,35 @@ public class LoginStatusManager {
     return sharedPreferences.getBoolean(SharedPreferencesUtils.LOGIN_STATUS, false);
   }
 
-  public void saveLoginStatus(String username, String password) {
-    sharedPreferences.edit().putString(SharedPreferencesUtils.LOGIN_EMAIL, username).apply();
-    sharedPreferences.edit().putString(SharedPreferencesUtils.LOGIN_PASSWORD, password).apply();
+  public void saveLoginStatus(String email, String photoURL, String displayName, String type) {
+    sharedPreferences.edit().putString(SharedPreferencesUtils.LOGIN_EMAIL, email).apply();
+    sharedPreferences.edit().putString(SharedPreferencesUtils.LOGIN_PHOTO_URL, photoURL).apply();
+    sharedPreferences.edit()
+        .putString(SharedPreferencesUtils.LOGIN_DISPLAY_NAME, displayName)
+        .apply();
     sharedPreferences.edit().putBoolean(SharedPreferencesUtils.LOGIN_STATUS, true).apply();
+    sharedPreferences.edit().putString(SharedPreferencesUtils.LOGIN_ACCOUNT_TYPE, type).apply();
   }
 
   public void logout() {
+
+    clearSharedPreferences();
+  }
+
+  private void clearSharedPreferences() {
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_STATUS).commit();
     sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_EMAIL).commit();
-    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PASSWORD).commit();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PHOTO_URL).commit();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_DISPLAY_NAME).commit();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_ACCOUNT_TYPE).commit();
   }
 
   public String getLoginName() {
-    return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
+    String name = sharedPreferences.getString(SharedPreferencesUtils.LOGIN_EMAIL, "");
+    if (TextUtils.isEmpty(name)) {
+      name = sharedPreferences.getString(SharedPreferencesUtils.LOGIN_DISPLAY_NAME, "");
+    }
+    return name;
   }
 
   public String getLoginNameForDrawer() {
@@ -48,5 +65,20 @@ public class LoginStatusManager {
       return getLoginName();
     }
     return "";
+  }
+
+  public String getPhotoUrlForDrawer() {
+    if (isLoggedIn()) {
+      return getPhotoUrl();
+    }
+    return "";
+  }
+
+  public String getPhotoUrl() {
+    return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_PHOTO_URL, "");
+  }
+
+  public String getAccountType() {
+    return sharedPreferences.getString(SharedPreferencesUtils.LOGIN_ACCOUNT_TYPE, "");
   }
 }

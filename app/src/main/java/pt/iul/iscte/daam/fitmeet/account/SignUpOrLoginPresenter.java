@@ -1,6 +1,7 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
 import android.content.Intent;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 
 /**
@@ -10,10 +11,13 @@ import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 public class SignUpOrLoginPresenter implements FragmentPresenter {
 
   private FacebookLoginManager facebookLoginManager;
+  private LoginStatusManager loginStatusManager;
   private SignUpOrLoginView view;
 
-  public SignUpOrLoginPresenter(FacebookLoginManager facebookLoginManager, SignUpOrLoginView view) {
+  public SignUpOrLoginPresenter(FacebookLoginManager facebookLoginManager,
+      LoginStatusManager loginStatusManager, SignUpOrLoginView view) {
     this.facebookLoginManager = facebookLoginManager;
+    this.loginStatusManager = loginStatusManager;
     this.view = view;
   }
 
@@ -38,11 +42,12 @@ public class SignUpOrLoginPresenter implements FragmentPresenter {
   }
 
   @Override public void onStart() {
-    facebookLoginManager.setupFacebookCallback(
-        new FacebookLoginManager.FacebookLoginStatusListener() {
+    facebookLoginManager.setupFacebookCallback(new LoginPresenter.LoginListener() {
 
-          @Override public void onSuccess() {
-            System.out.println("success facebook");
+      @Override public void onSuccess(String email, String photourl, String displayName) {
+        loginStatusManager.saveLoginStatus(email, photourl, displayName,
+            SharedPreferencesUtils.LOGIN_TYPE_FACEBOOK);
+        view.finish();
           }
 
           @Override public void onError(int error) {
