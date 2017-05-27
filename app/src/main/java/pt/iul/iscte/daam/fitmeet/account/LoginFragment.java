@@ -13,17 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
 public class LoginFragment extends FragmentView implements LoginView {

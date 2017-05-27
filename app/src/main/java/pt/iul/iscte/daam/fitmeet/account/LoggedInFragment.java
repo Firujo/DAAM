@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
 public class LoggedInFragment extends FragmentView implements LoggedInView {

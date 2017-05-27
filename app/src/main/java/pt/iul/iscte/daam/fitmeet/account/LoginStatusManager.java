@@ -1,7 +1,7 @@
 package pt.iul.iscte.daam.fitmeet.account;
 
 import android.content.SharedPreferences;
-import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 
 /**
  * Created by filipe on 21-05-2017.

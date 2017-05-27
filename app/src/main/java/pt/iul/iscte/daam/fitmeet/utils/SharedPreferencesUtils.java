@@ -1,4 +1,4 @@
-package pt.iul.iscte.daam.fitmeet.Utils;
+package pt.iul.iscte.daam.fitmeet.utils;
 
 /**
  * Created by filipe on 21-05-2017.

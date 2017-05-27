@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.widget.Toast;
 import pt.iul.iscte.daam.fitmeet.R;
-import pt.iul.iscte.daam.fitmeet.Utils.SharedPreferencesUtils;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.View;
 
 public class AccountActivity extends View
