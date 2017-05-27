@@ -16,8 +16,7 @@ class RegisterCredentialsValidator {
   public static final int EMPTY_CITY = 6;
   public static final int SUCCESS = 7;
 
-  public int validate(String name, String username, String password, String passwordConfirmation,
-      String birthday, String city) {
+  public int validate(String name, String username, String password, String passwordConfirmation) {
     if (name.isEmpty()) {
       return EMPTY_NAME;
     } else if (username.isEmpty()) {
@@ -26,10 +25,6 @@ class RegisterCredentialsValidator {
       return EMPTY_PASSWORD;
     } else if (passwordConfirmation.isEmpty() || !password.equals(passwordConfirmation)) {
       return INVALID_PASSWORD_MATCH;
-    } else if (birthday.isEmpty()) {
-      return EMPTY_BIRTHDAY;
-    } else if (city.isEmpty()) {
-      return EMPTY_CITY;
     }
     return SUCCESS;
   }
