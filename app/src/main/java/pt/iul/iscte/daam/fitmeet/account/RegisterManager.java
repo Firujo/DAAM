@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by filipe on 01-05-2017.
@@ -19,6 +20,8 @@ public class RegisterManager {
 
   private FirebaseAuth mAuth;
   private RegisterCredentialsValidator credentialsValidator;
+  private FirebaseAuth.AuthStateListener mAuthListener;
+
 
   public RegisterManager(RegisterCredentialsValidator registerCredentialsValidator) {
     this.credentialsValidator = registerCredentialsValidator;
@@ -26,6 +29,39 @@ public class RegisterManager {
 
   public void initializeFirebase() {
     mAuth = FirebaseAuth.getInstance();
+  }
+
+  public void setupAuthListener() {
+    mAuthListener = new FirebaseAuth.AuthStateListener() {
+      @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+          if (user.isEmailVerified()) {
+            System.out.println("Email is verified");
+            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
+            System.out.println(user.getDisplayName());
+          } else {
+            user.sendEmailVerification();
+            System.out.println("Email is not verified");
+          }
+          System.out.println("CORRECT AUTHENTICATION AFTER REGISTER !!!!");
+        } else {
+          System.out.println("onAuthStateChanged:signed_out");
+        }
+      }
+    };
+
+    mAuth.addAuthStateListener(mAuthListener);
+  }
+
+  public void removeAuthListener() {
+    if (mAuthListener != null) {
+      mAuth.removeAuthStateListener(mAuthListener);
+    }
+  }
+
+  public void stop() {
+    removeAuthListener();
   }
 
   public void registerNewUser(String name, String username, String password,
@@ -46,9 +82,9 @@ public class RegisterManager {
               // signed in user can be handled in the listener.
 
               if (!task.isSuccessful()) {
-                listener.onCompleteRegistration(SUCCESSFUL_REGISTRATION);
-              } else {
                 listener.onCompleteRegistration(UNSUCCESSFUL_REGISTRATION);
+              } else {
+                listener.onCompleteRegistration(SUCCESSFUL_REGISTRATION);
               }
 
               // ...

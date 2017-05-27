@@ -11,4 +11,7 @@ interface RegisterView {
   void successfulRegistration();
 
   void showUnsuccessfulRegistration();
+
+  void finish();
+
 }

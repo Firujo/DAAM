@@ -29,7 +29,6 @@ public class RegisterFragment extends FragmentView implements RegisterView {
   private OnFragmentInteractionListener mListener;
 
   private FirebaseAuth mAuth;
-  private FirebaseAuth.AuthStateListener mAuthListener;
 
   private RegisterPresenter presenter;
 
@@ -150,6 +149,10 @@ public class RegisterFragment extends FragmentView implements RegisterView {
 
   @Override public void showUnsuccessfulRegistration() {
     Toast.makeText(getContext(), "Unexpected error, please try again", Toast.LENGTH_SHORT).show();
+  }
+
+  @Override public void finish() {
+    getActivity().onBackPressed();
   }
 
   public interface OnFragmentInteractionListener {

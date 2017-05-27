@@ -29,15 +29,15 @@ public class RegisterPresenter implements FragmentPresenter {
   }
 
   @Override public void onDestroy() {
-
+    registerManager.stop();
   }
 
   @Override public void onStop() {
-
+    registerManager.stop();
   }
 
   @Override public void onStart() {
-
+    registerManager.setupAuthListener();
   }
 
   @Override public void onCreateView() {
@@ -61,6 +61,7 @@ public class RegisterPresenter implements FragmentPresenter {
             } else {
               view.showInvalidInputsMessage(result);
             }
+            view.finish();
           }
         });
   }
