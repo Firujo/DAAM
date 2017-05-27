@@ -49,9 +49,9 @@ public class RegisterPresenter implements FragmentPresenter {
   }
 
   public void pressedRegister(String name, String username, String password,
-      String passwordConfirmation, String birthday, String country, String city) {
-    registerManager.registerNewUser(name, username, password, passwordConfirmation, birthday,
-        country, city, new RegisterListener() {
+      String passwordConfirmation, String birthday, String city) {
+    registerManager.registerNewUser(name, username, password, passwordConfirmation, birthday, city,
+        new RegisterListener() {
           @Override public void onCompleteRegistration(int result) {
 
             if (result == RegisterManager.SUCCESSFUL_REGISTRATION) {

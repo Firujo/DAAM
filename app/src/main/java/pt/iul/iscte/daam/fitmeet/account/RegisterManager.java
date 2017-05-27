@@ -65,11 +65,11 @@ public class RegisterManager {
   }
 
   public void registerNewUser(String name, String username, String password,
-      String passwordConfirmation, String birthday, String country, String city,
+      String passwordConfirmation, String birthday, String city,
       RegisterPresenter.RegisterListener listener) {
     int inputsValidationResult =
         credentialsValidator.validate(name, username, password, passwordConfirmation, birthday,
-            country, city);
+            city);
 
     if (inputsValidationResult == RegisterCredentialsValidator.SUCCESS) {
       mAuth.createUserWithEmailAndPassword(username, password)
