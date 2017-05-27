@@ -9,11 +9,11 @@ import pt.iul.iscte.daam.fitmeet.view.FragmentPresenter;
 public class LoggedInPresenter implements FragmentPresenter {
 
   private LoggedInView view;
-  private LoginStatusManager loginStatusManager;
+  private LoggedInManager loggedInManager;
 
-  public LoggedInPresenter(LoggedInView view, LoginStatusManager loginStatusManager) {
+  public LoggedInPresenter(LoggedInView view, LoggedInManager loggedInManager) {
     this.view = view;
-    this.loginStatusManager = loginStatusManager;
+    this.loggedInManager = loggedInManager;
   }
 
   @Override public void onCreate() {
@@ -45,12 +45,13 @@ public class LoggedInPresenter implements FragmentPresenter {
   }
 
   @Override public void onViewCreated() {
-    String name = loginStatusManager.getLoginName();
-    view.setupWelcomeMessage(name);
+    String name = loggedInManager.getLoginName();
+    String photoUrl = loggedInManager.getPhotoUrl();
+    view.setupWelcomeInformation(name, photoUrl);
   }
 
   public void pressedLogout() {
-    loginStatusManager.logout();
+    loggedInManager.logout();
     view.finish();
   }
 }

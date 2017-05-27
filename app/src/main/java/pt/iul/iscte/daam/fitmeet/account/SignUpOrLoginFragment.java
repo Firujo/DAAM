@@ -17,6 +17,7 @@ import com.facebook.login.widget.LoginButton;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import pt.iul.iscte.daam.fitmeet.R;
+import pt.iul.iscte.daam.fitmeet.utils.SharedPreferencesUtils;
 import pt.iul.iscte.daam.fitmeet.view.FragmentView;
 
 public class SignUpOrLoginFragment extends FragmentView implements SignUpOrLoginView {
@@ -58,7 +59,9 @@ public class SignUpOrLoginFragment extends FragmentView implements SignUpOrLogin
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     FacebookLoginManager facebookLoginManager = new FacebookLoginManager(firebaseAuth);
-    presenter = new SignUpOrLoginPresenter(facebookLoginManager, this);
+    presenter = new SignUpOrLoginPresenter(facebookLoginManager, new LoginStatusManager(
+        getContext().getSharedPreferences(SharedPreferencesUtils.SHARED_PREFERENCES_NAME,
+            Context.MODE_PRIVATE)), this);
     attachPresenter(presenter);
     super.onViewCreated(view, savedInstanceState);
   }
@@ -90,6 +93,10 @@ public class SignUpOrLoginFragment extends FragmentView implements SignUpOrLogin
 
   @Override public void openLoginFragment() {
     initFragment(LoginFragment.newInstance());
+  }
+
+  @Override public void finish() {
+    getActivity().onBackPressed();
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

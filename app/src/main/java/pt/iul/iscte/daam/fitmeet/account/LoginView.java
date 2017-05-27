@@ -6,7 +6,7 @@ package pt.iul.iscte.daam.fitmeet.account;
 
 public interface LoginView {
 
-  void showLoginSuccessfulToast();
+  void finish();
 
   void showErrorToast(int error);
 }

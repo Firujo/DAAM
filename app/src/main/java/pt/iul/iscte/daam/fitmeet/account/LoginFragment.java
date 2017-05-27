@@ -97,7 +97,7 @@ public class LoginFragment extends FragmentView implements LoginView {
     });
   }
 
-  @Override public void showLoginSuccessfulToast() {
+  @Override public void finish() {
     getActivity().onBackPressed();
   }
 

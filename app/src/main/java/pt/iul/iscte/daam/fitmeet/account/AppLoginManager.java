@@ -29,7 +29,6 @@ public class AppLoginManager {
 
   private FirebaseAuth mAuth;
   private FirebaseAuth.AuthStateListener mAuthListener;
-  private CallbackManager facebookCallbackManager;
 
   public static final int VALID_FIELDS = 0;
   public static final int EMPTY_FIELDS = 1;
@@ -65,7 +64,7 @@ public class AppLoginManager {
     }
   }
 
-  public void login(String username, String password, LoginListener loginListener) {
+  public void login(String username, String password, LoginPresenter.LoginListener loginListener) {
     int validationResult = validateLogin(username, password);
     if (validationResult != VALID_FIELDS) {
       loginListener.onError(validationResult);
@@ -74,12 +73,11 @@ public class AppLoginManager {
     }
   }
 
-  private void signIn(String username, String password, LoginListener loginListener) {
-    mAuth.signInWithEmailAndPassword(username, password)
+  private void signIn(String email, String password, LoginPresenter.LoginListener loginListener) {
+    mAuth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
           @Override public void onComplete(@NonNull Task<AuthResult> task) {
             System.out.println("signInWithEmail:onComplete:" + task.isSuccessful());
-
             // If sign in fails, display a message to the user. If sign in succeeds
             // the auth state listener will be notified and logic to handle the
             // signed in user can be handled in the listener.
@@ -87,10 +85,13 @@ public class AppLoginManager {
               System.out.println("signInWithEmail:failed" + task.getException());
               loginListener.onError(WRONG_COMBINATION);
             } else {
-              loginListener.onSuccess();
+              FirebaseUser user = mAuth.getCurrentUser();
+              if (user != null) {
+                String photourl = user.getPhotoUrl().toString();
+                String displayName = user.getDisplayName();
+                loginListener.onSuccess(email, photourl, displayName);
+              }
             }
-
-            // ...
           }
         });
   }
@@ -111,9 +112,4 @@ public class AppLoginManager {
     return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar.png");
   }
 
-  interface LoginListener {
-    void onSuccess();
-
-    void onError(int error);
-  }
 }
