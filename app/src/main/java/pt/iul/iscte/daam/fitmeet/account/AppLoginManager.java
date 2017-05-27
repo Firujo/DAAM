@@ -2,6 +2,7 @@ package pt.iul.iscte.daam.fitmeet.account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 /**
  * Created by filipe on 08-04-2017.
@@ -42,13 +44,11 @@ public class AppLoginManager {
       @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-          if (user.isEmailVerified()) {
-            System.out.println("Email is verified");
-            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-            System.out.println(user.getDisplayName());
-          } else {
-            user.sendEmailVerification();
-            System.out.println("Email is not verified");
+          if (user.getPhotoUrl() == null) {
+            Uri uri = getDefaultPhotoUri();
+            UserProfileChangeRequest profileUpdates =
+                new UserProfileChangeRequest.Builder().setPhotoUri(uri).build();
+            user.updateProfile(profileUpdates);
           }
         } else {
           System.out.println("onAuthStateChanged:signed_out");
@@ -72,7 +72,6 @@ public class AppLoginManager {
     } else {
       signIn(username, password, loginListener);
     }
-
   }
 
   private void signIn(String username, String password, LoginListener loginListener) {
@@ -106,6 +105,10 @@ public class AppLoginManager {
 
   public void stop() {
     removeAuthListener();
+  }
+
+  private Uri getDefaultPhotoUri() {
+    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar.png");
   }
 
   interface LoginListener {
