@@ -46,6 +46,10 @@ public class NewEventPresenter implements NewEventContract.UserActionsListener {
     }
   }
 
+  @Override public void distanceButtonClicked() {
+    newEventView.showDistancePicker();
+  }
+
   @Override public void difficultyButtonClicked() {
     newEventView.showDifficultyPicker();
   }

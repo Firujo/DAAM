@@ -20,7 +20,7 @@ import java.util.Locale;
 public class DatePickerFragment extends DialogFragment
     implements DatePickerDialog.OnDateSetListener {
 
-  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+  private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
   private Button dateButton;
 
   @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {

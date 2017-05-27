@@ -14,10 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +28,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import pt.iul.iscte.daam.fitmeet.R;
 import pt.iul.iscte.daam.fitmeet.data.Difficulty;
@@ -41,8 +48,8 @@ import pt.iul.iscte.daam.fitmeet.newevent.presenter.NewEventPresenter;
  */
 public class NewEventFragment extends Fragment implements NewEventContract.View {
 
+  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
   private NewEventContract.UserActionsListener actionsListener;
-
   private TextView title;
   private TextView description;
   private Button difficultyPicker;
@@ -52,9 +59,14 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   private ImageView cyclingImage;
   private Drawable defaultBackground;
   private Button datePicker;
+  private Spinner locationPicker;
+
+  private String category;
 
   // [START declare_database_ref]
   private DatabaseReference mDatabase;
+  private Switch privacySwitch;
+  private Button distancePicker;
   // [END declare_database_ref]
 
   public NewEventFragment() {
@@ -82,6 +94,9 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     cyclingImage = (ImageView) view.findViewById(R.id.new_event_cycling_image);
     trailingImage = (ImageView) view.findViewById(R.id.new_event_trailing);
     datePicker = (Button) view.findViewById(R.id.new_event_date_button);
+    locationPicker = (Spinner) view.findViewById(R.id.new_event_location);
+    privacySwitch = (Switch) view.findViewById(R.id.new_event_switch_privacy);
+    distancePicker = (Button) view.findViewById(R.id.new_event_distance_button);
 
     setupViews();
 
@@ -91,6 +106,12 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   }
 
   private void setupViews() {
+    ArrayAdapter<CharSequence> adapter =
+        ArrayAdapter.createFromResource(getContext(), R.array.locations_array,
+            android.R.layout.simple_spinner_item);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    locationPicker.setAdapter(adapter);
+    distancePicker.setOnClickListener(click -> actionsListener.distanceButtonClicked());
     difficultyPicker.setOnClickListener(v -> actionsListener.difficultyButtonClicked());
     datePicker.setOnClickListener(v -> actionsListener.dateButtonClicked());
     defaultBackground = rowingImage.getBackground();
@@ -100,6 +121,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
       runningImage.setBackground(defaultBackground);
       cyclingImage.setBackground(defaultBackground);
       trailingImage.setBackground(defaultBackground);
+      category = "rowing";
     });
 
     runningImage.setOnClickListener(v -> {
@@ -107,6 +129,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
       runningImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
       cyclingImage.setBackground(defaultBackground);
       trailingImage.setBackground(defaultBackground);
+      category = "running";
     });
 
     cyclingImage.setOnClickListener(v -> {
@@ -114,6 +137,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
       runningImage.setBackground(defaultBackground);
       cyclingImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
       trailingImage.setBackground(defaultBackground);
+      category = "cycling";
     });
 
     trailingImage.setOnClickListener(v -> {
@@ -121,6 +145,7 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
       runningImage.setBackground(defaultBackground);
       cyclingImage.setBackground(defaultBackground);
       trailingImage.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+      category = "trailling";
     });
   }
 
@@ -157,9 +182,31 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     }
   }
 
+  @Override public void showDistancePicker() {
+    final Dialog dialog = new Dialog(getContext());
+    dialog.setContentView(R.layout.distance_picker_dialog);
+    Button buttonAffirmative = (Button) dialog.findViewById(R.id.button_affirmative);
+    Button buttonNegative = (Button) dialog.findViewById(R.id.button_negative);
+    final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker1);
+    numberPicker.setMaxValue(100);
+    numberPicker.setMinValue(0);
+    numberPicker.setValue(10);
+    numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+    numberPicker.setWrapSelectorWheel(false);
+    buttonAffirmative.setOnClickListener(v -> {
+      distancePicker.setText(String.valueOf(numberPicker.getValue()));
+      dialog.dismiss();
+    });
+    buttonNegative.setOnClickListener(v -> dialog.dismiss());
+    dialog.show();
+  }
+
   @Override public void showDifficultyPicker() {
     final Dialog dialog = new Dialog(getContext());
-    String[] levelsArray = new String[] { "Begginer", "Intermediate", "Advanced" };
+    String[] levelsArray = new String[] {
+        Difficulty.BEGGINNER.toString(), Difficulty.MEDIUM.toString(),
+        Difficulty.ADVANCED.toString()
+    };
     dialog.setContentView(R.layout.difficulty_picker_dialog);
     Button buttonAffirmative = (Button) dialog.findViewById(R.id.button_affirmative);
     Button buttonNegative = (Button) dialog.findViewById(R.id.button_negative);
@@ -180,7 +227,24 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   @Override public void submitEvent() {
     final String title = this.title.getText().toString();
     final String description = this.description.getText().toString();
-
+    final String location = this.locationPicker.getSelectedItem().toString();
+    final String privacy;
+    if (privacySwitch.isChecked()) {
+      privacy = "private";
+    } else {
+      privacy = "public";
+    }
+    Date tmpDate;
+    try {
+      tmpDate = dateFormat.parse(this.datePicker.getText().toString());
+    } catch (ParseException e) {
+      tmpDate = new Date();
+    }
+    final Date date = tmpDate;
+    final int distanceKm = Integer.valueOf(this.distancePicker.getText().toString());
+    final String imageUrl =
+        "http://www.active.com/Assets/Running/620/What+is+Maximalist+Running+LPF.jpg";
+    final String difficulty = this.difficultyPicker.getText().toString();
     //// Title is required
     //if (Strings.isNullOrEmpty(title)) {
     //  mTitleField.setError(REQUIRED);
@@ -202,8 +266,8 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
     mDatabase.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
       @Override public void onDataChange(DataSnapshot dataSnapshot) {
 
-          createNewEvent(title, description);
-
+        createNewEvent(title, description, location, privacy, date, distanceKm, imageUrl,
+            difficulty);
 
         // Finish this Activity, back to the stream
         //setEditingEnabled(true);
@@ -223,14 +287,15 @@ public class NewEventFragment extends Fragment implements NewEventContract.View 
   }
 
   // [START write_fan_out]
-  private void createNewEvent(String title, String description) {
+  private void createNewEvent(String title, String description, String location, String privacy,
+      Date date, int distanceKm, String imageUrl, String difficulty) {
     // Create new post at /user-posts/$userid/$postid and at
     // /posts/$postid simultaneously
     String key = mDatabase.child("events").push().getKey();
-    Event event = new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
-        "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-        Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public");
+    Event event = new Event(1, description, title, date, location, 1, imageUrl, difficulty,
+        new User(1, "jonenz", "jonenz@richenz.comenz",
+            "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 0, distanceKm, "public",
+        category);
     Map<String, Object> postValues = event.toMap();
 
     Map<String, Object> childUpdates = new HashMap<>();

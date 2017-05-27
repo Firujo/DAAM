@@ -16,12 +16,11 @@ import pt.iul.iscte.daam.fitmeet.data.User;
  */
 public class EventsPresenter implements EventsContract.UserActionsListener {
   private final EventsRepository mEventsRepository;
-  private LoginStatusManager loginStatusManager;
   private final EventsContract.View mEventsView;
+  private LoginStatusManager loginStatusManager;
 
   public EventsPresenter(@NonNull EventsRepository mEventsRepository,
-      LoginStatusManager loginStatusManager,
-      @NonNull EventsContract.View eventsView) {
+      LoginStatusManager loginStatusManager, @NonNull EventsContract.View eventsView) {
     this.mEventsRepository = mEventsRepository;
     this.loginStatusManager = loginStatusManager;
     this.mEventsView = eventsView;
@@ -53,27 +52,28 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public"));
+        "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public",
+        "running"));
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public"));
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public", "running"));
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public"));
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public", "running"));
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public"));
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public", "running"));
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public"));
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public", "running"));
     events.add(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
         "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
         Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public"));
+        "http://www.cactuar.net/images/cactuar/cactuar.jpg"), 19, 10, "public", "running"));
 
     return events;
   }

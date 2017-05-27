@@ -57,11 +57,11 @@ public class EventDetailPresenter implements EventDetailContract.UserActionsList
 
     eventsRepository.getEvent(eventId, event -> {
       eventsDetailView.setLoadingIndicator(false);
-      showEvent(
-          new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
-              "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
-              Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
-              "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public"));
+      showEvent(new Event(1, "tragam as mines!", "corrida do benfica", new Date(), "benfica!", 90,
+          "http://images.huffingtonpost.com/2016-08-07-1470611179-5139689-MorningRun.png",
+          Difficulty.MEDIUM.toString(), new User(1, "jonenz", "jonenz@richenz.comenz",
+          "http://smalldata.io/startup/common-files/icons/sdl_logo.png"), 19, 10, "public",
+          "running"));
     });
   }
 

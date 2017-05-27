@@ -7,6 +7,8 @@ public interface NewEventContract {
 
   interface View {
 
+    void showDistancePicker();
+
     void showNewEventError();
 
     void showNewEventSuccess();
@@ -25,5 +27,7 @@ public interface NewEventContract {
     void difficultyButtonClicked();
 
     void dateButtonClicked();
+
+    void distanceButtonClicked();
   }
 }

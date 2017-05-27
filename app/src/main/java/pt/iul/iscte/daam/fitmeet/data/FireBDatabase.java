@@ -1,7 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.data;
 
 import com.google.firebase.database.DatabaseReference;
-
 import java.util.Date;
 
 /**
@@ -24,7 +23,7 @@ public class FireBDatabase {
 
     public void newEvent(long id, String description, String title, Date date, String location, int numberOfLikes, String graphicURL, String difficulty, User owner) {
         Event newEvent = new Event(numberOfLikes, description, title, date,location, numberOfLikes ,graphicURL, difficulty, owner,
-            19, 10, "public");
+            19, 10, "public", "running");
         database.child(Long.toString(id)).setValue(newEvent);
     }
 

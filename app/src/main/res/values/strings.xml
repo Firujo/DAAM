@@ -17,7 +17,7 @@
   <string name="successful_login">Successful login</string>
   <string name="empty_fields">Can not leave empty fields.</string>
   <string name="new_event">Create gather</string>
-  <string name="hint_event_title">Event Title</string>
+  <string name="hint_event_title">Title</string>
   <string name="hint_description">Description</string>
   <string name="privacy_public">Public</string>
   <string name="privacy_private">Private</string>
@@ -44,6 +44,10 @@
   <string name="event_detail_route">Route</string>
   <string name="event_detail_info_label">Quick Information</string>
   <string name="loading">Loading...</string>
+  <string name="hint_location">Location</string>
   <string name="invalid_login_combination">Invalid username and password combination</string>
+  <string name="hint_distance">Distance (km)</string>
+  <string name="distance_metric_km">km</string>
+
 
 </resources>

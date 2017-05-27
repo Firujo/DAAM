@@ -19,6 +19,7 @@ public class Event {
   private Date date;
   private String imageUrl;
   private String difficulty;
+  private String category;
   private int messagesNumber;
   private int distanceKm;
   private int numberOfAttendees;
@@ -28,7 +29,7 @@ public class Event {
 
   public Event(int id, String description, String title, Date date, String location,
       int numberOfAttendees, String imageUrl, String difficulty, User owner, int messagesNumber,
-      int distanceKm, String privacy) {
+      int distanceKm, String privacy, String category) {
     this.id = id;
     this.description = description;
     this.title = title;
@@ -41,6 +42,7 @@ public class Event {
     this.owner = owner;
     this.messagesNumber = messagesNumber;
     this.distanceKm = distanceKm;
+    this.category = category;
   }
 
   // [START post_to_map]
@@ -57,9 +59,18 @@ public class Event {
     result.put("date", date);
     result.put("difficulty", difficulty);
     result.put("location", location);
+    result.put("category", category);
     return result;
   }
   // [END post_to_map]
+
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
   public int getMessagesNumber() {
     return messagesNumber;
