@@ -2,6 +2,7 @@ package pt.iul.iscte.daam.fitmeet.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -139,6 +141,13 @@ public class EventsFragment extends Fragment implements EventsContract.View {
     TextView textView =
         (TextView) navigationView.getHeaderView(0).findViewById(R.id.email_information);
     textView.setText(email);
+  }
+
+  @Override public void setDrawerAvatar(Uri uri) {
+    NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+    ImageView imageView =
+        (ImageView) navigationView.getHeaderView(0).findViewById(R.id.drawer_avatar);
+    imageView.setImageURI(uri);
   }
 
   @Override public void onResume() {

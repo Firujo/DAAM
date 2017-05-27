@@ -1,5 +1,6 @@
 package pt.iul.iscte.daam.fitmeet.events;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import java.util.List;
 import pt.iul.iscte.daam.fitmeet.data.Event;
@@ -20,6 +21,8 @@ public interface EventsContract {
     void setProgressIndicator(boolean showProgress);
 
     void setLoginInformation(String email);
+
+    void setDrawerAvatar(Uri uri);
   }
 
   interface UserActionsListener {
