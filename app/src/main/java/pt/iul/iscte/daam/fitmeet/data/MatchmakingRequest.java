@@ -20,7 +20,7 @@ public class MatchmakingRequest{
         this.sanitized = sanitized;
     }
 
-    public MatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, long tipo, String user, boolean sanitized) {
+    public MatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, String tipo, String user, boolean sanitized) {
         this.duracaoMax = duracaoMax;
         this.duracaoMin = duracaoMin;
         this.horaMax = horaMax;
@@ -33,8 +33,18 @@ public class MatchmakingRequest{
         this.sanitized = sanitized;
     }
 
+    public MatchmakingRequest(long id, String local, String tipo, String user, boolean sanitized) {
+
+        this.id = id;
+        this.local = local;
+
+        this.tipo = tipo;
+        this.user = user;
+        this.sanitized = sanitized;
+    }
+
     private long raio;
-        private long tipo;
+        private String tipo;
         private String user;
         private boolean sanitized;
         // todo user user
@@ -83,7 +93,7 @@ public class MatchmakingRequest{
         this.raio = raio;
     }
 
-    public void setTipo(long tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -119,7 +129,7 @@ public class MatchmakingRequest{
         return raio;
     }
 
-    public long getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
@@ -127,7 +137,7 @@ public class MatchmakingRequest{
         return user;
     }
 
-    public MatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, long tipo, String user) {
+    public MatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, String tipo, String user) {
 
         this.duracaoMax = duracaoMax;
         this.duracaoMin = duracaoMin;

@@ -27,12 +27,16 @@ public class FireBDatabase {
         database.child(Long.toString(id)).setValue(newEvent);
     }
 
-    public void newMatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, long tipo, String user, boolean sanitized) {
+    public void newMatchmakingRequest(long duracaoMax, long duracaoMin, long horaMax, long horaMin, long id, String local, long raio, String tipo, String user, boolean sanitized) {
         MatchmakingRequest newMatchmakingRequest = new MatchmakingRequest(duracaoMax, duracaoMin, horaMax, horaMin, id, local, raio, tipo,user, sanitized );
-        database.child(Long.toString(id)).setValue(newMatchmakingRequest);
+        database.child(tipo).child(local).child(Long.toString(id)).setValue(newMatchmakingRequest);
     }
 
-
+//    public void newMatchmakingRequest(long id, String local, long tipo, String user, boolean sanitized) {
+//        MatchmakingRequest newMatchmakingRequest = new MatchmakingRequest(id, local, tipo, user, sanitized);
+//        //database.child(Long.toString(id)).child(Long.toString(tipo)).setValue(newMatchmakingRequest);
+//        database.child(Long.toString(id)).child(Long.toString(tipo)).setValue(newMatchmakingRequest.getLocal(),newMatchmakingRequest.getRaio());
+//    }
 
 
     public DatabaseReference getDatabase() { return database;}

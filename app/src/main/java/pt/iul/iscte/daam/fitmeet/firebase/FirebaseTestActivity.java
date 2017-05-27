@@ -109,8 +109,21 @@ public class FirebaseTestActivity extends AppCompatActivity {
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference myRef = database.getReference("message");
         FireBDatabase db = new FireBDatabase("MatchmakingRequest");
-        db.newMatchmakingRequest(30,60,20,21,4,"Cascais", 15, 1,"Bas Dost", false);
-        db.newMatchmakingRequest(45,69,19,22,3,"Cascais", 20, 1,"Castanhos", false);
+
+
+          db.newMatchmakingRequest(30,60,20,21,1,"Cascais", 15, "Running","Bas Dost", false);
+          db.newMatchmakingRequest(30,60,20,21,2,"Estoril", 15, "Trail","Gui", false);
+          db.newMatchmakingRequest(30,60,20,21,3,"Estoril", 15, "Trail","Tomas", false);
+          db.newMatchmakingRequest(30,60,20,21,4,"Cascais", 15, "Running","Ruiz", false);
+          db.newMatchmakingRequest(30,60,19,21,5,"Estoril", 15, "Running", "Ze", false);
+
+//        db.newMatchmakingRequest(45,69,19,22,3,"Cascais", 20, 1,"Castanhos", false);
+        //db.newMatchmakingRequest(1,"test",1,"Bas Dost", false);
+//        db.newMatchmakingRequest(2,"Cascais",1,"Zw", false);
+//        db.newMatchmakingRequest(3,"Estoril",2,"zas", false);
+//        db.newMatchmakingRequest(4,"Cascais",3,"Hugens Dost", false);
+//        db.newMatchmakingRequest(5,"Lisboa",2,"Gaston", false);
+//        db.newMatchmakingRequest(6,"Estoril",1,"Ginaasdi", false);
 
         //db.getDatabase().setValue("Hello, World!");
         //db.writeNewUser(1, "Bruno", "boss@b.pt","url");
