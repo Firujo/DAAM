@@ -61,7 +61,7 @@ public class RegisterManager {
   }
 
   private Uri getDefaultPhotoUri() {
-    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar.png");
+    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar");
   }
 
   public void removeAuthListener() {

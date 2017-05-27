@@ -79,8 +79,8 @@ public class LoggedInFragment extends FragmentView implements LoggedInView {
 
   @Override public void setupWelcomeInformation(String name, String photoUrl) {
     welcomeMessage.setText(getResources().getString(R.string.welcome_message, name));
-    Picasso.with(getActivity())
-        .load(photoUrl)
+    Uri uri = Uri.parse(photoUrl);
+    Picasso.with(getActivity()).load(uri)
         .transform(new CircleTransform())
         .into(AvatarImageView);
   }

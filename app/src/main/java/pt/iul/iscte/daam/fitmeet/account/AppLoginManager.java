@@ -109,7 +109,7 @@ public class AppLoginManager {
   }
 
   private Uri getDefaultPhotoUri() {
-    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar.png");
+    return Uri.parse("android.resource://pt.iul.iscte.daam.fitmeet/drawable/avatar");
   }
 
 }
