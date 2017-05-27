@@ -48,12 +48,10 @@ public class LoginPresenter implements FragmentPresenter {
 
   @Override public void onStop() {
     appLoginManager.stop();
-    facebookLoginManager.stop();
   }
 
   @Override public void onStart() {
     appLoginManager.setupAuthListener();
-    facebookLoginManager.setupAuthListener();
     facebookLoginManager.setupFacebookCallback(
         new FacebookLoginManager.FacebookLoginStatusListener() {
 

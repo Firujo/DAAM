@@ -31,37 +31,9 @@ public class FacebookLoginManager {
     this.mAuth = mAuth;
   }
 
-  public void setupAuthListener() {
-    mAuthListener = new FirebaseAuth.AuthStateListener() {
-      @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-          System.out.println("facebook login");
-          if (user.isEmailVerified()) {
-            System.out.println("Email is verified");
-            System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
-            System.out.println(user.getDisplayName());
-          } else {
-            user.sendEmailVerification();
-            System.out.println("Email is not verified");
-          }
-        } else {
-          System.out.println("onAuthStateChanged:signed_out");
-        }
-      }
-    };
-
-    mAuth.addAuthStateListener(mAuthListener);
-  }
 
   public void initializeLoginControls() {
     facebookCallbackManager = CallbackManager.Factory.create();
-  }
-
-  public void removeAuthListener() {
-    if (mAuthListener != null) {
-      mAuth.removeAuthStateListener(mAuthListener);
-    }
   }
 
   public void setupFacebookCallback(FacebookLoginStatusListener statusListener) {
@@ -101,10 +73,6 @@ public class FacebookLoginManager {
 
   public void onResult(int requestCode, int resultCode, Intent data) {
     facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-  }
-
-  public void stop() {
-    removeAuthListener();
   }
 
   interface FacebookLoginStatusListener {
