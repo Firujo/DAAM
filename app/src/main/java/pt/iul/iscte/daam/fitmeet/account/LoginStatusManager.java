@@ -34,9 +34,9 @@ public class LoginStatusManager {
   }
 
   public void logout() {
-    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_STATUS).apply();
-    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_EMAIL).apply();
-    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PASSWORD).apply();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_STATUS).commit();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_EMAIL).commit();
+    sharedPreferences.edit().remove(SharedPreferencesUtils.LOGIN_PASSWORD).commit();
   }
 
   public String getLoginName() {

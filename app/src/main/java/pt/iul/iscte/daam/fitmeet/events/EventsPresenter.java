@@ -90,6 +90,8 @@ public class EventsPresenter implements EventsContract.UserActionsListener {
     String email = loginStatusManager.getLoginNameForDrawer();
     if (!TextUtils.isEmpty(email)) {
       mEventsView.setLoginInformation(email);
+    } else {
+      mEventsView.setLoginInformation("");
     }
   }
 }
