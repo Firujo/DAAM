@@ -23,9 +23,7 @@ public class RegisterFragment extends FragmentView implements RegisterView {
   private EditText usernameEditText;
   private EditText passwordEditText;
   private EditText passwordConfirmationEditText;
-  private EditText birthdayEditText;
-  //private EditText countryEditText;
-  private EditText cityEditText;
+
   private OnFragmentInteractionListener mListener;
 
   private FirebaseAuth mAuth;
@@ -73,22 +71,17 @@ public class RegisterFragment extends FragmentView implements RegisterView {
     usernameEditText = (EditText) view.findViewById(R.id.usernameEditText);
     passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
     passwordConfirmationEditText = (EditText) view.findViewById(R.id.passwordConfirmationEditText);
-    birthdayEditText = (EditText) view.findViewById(R.id.birthday);
-    cityEditText = (EditText) view.findViewById(R.id.city);
   }
 
   private void setupListener() {
     registerButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         final String name = nameEditText.getText().toString();
-        final String username = usernameEditText.getText().toString();
+        final String email = usernameEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
         final String passwordConfirmation = passwordConfirmationEditText.getText().toString();
-        final String birthday = birthdayEditText.getText().toString();
-        final String city = cityEditText.getText().toString();
 
-        presenter.pressedRegister(name, username, password, passwordConfirmation, birthday,
-            city);
+        presenter.pressedRegister(name, email, password, passwordConfirmation);
       }
     });
   }
@@ -121,14 +114,6 @@ public class RegisterFragment extends FragmentView implements RegisterView {
       case RegisterCredentialsValidator.INVALID_PASSWORD_MATCH:
         passwordConfirmationEditText.setError("password and password confirmation don't match");
         passwordConfirmationEditText.requestFocus();
-        break;
-      case RegisterCredentialsValidator.EMPTY_BIRTHDAY:
-        birthdayEditText.setError("Birthday can not be empty !");
-        birthdayEditText.requestFocus();
-        break;
-      case RegisterCredentialsValidator.EMPTY_CITY:
-        cityEditText.setError("City can not be empty !");
-        cityEditText.requestFocus();
         break;
       default:
         Toast.makeText(getContext(),

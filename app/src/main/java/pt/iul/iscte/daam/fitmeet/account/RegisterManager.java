@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 /**
  * Created by filipe on 01-05-2017.
@@ -22,6 +23,7 @@ public class RegisterManager {
   private RegisterCredentialsValidator credentialsValidator;
   private FirebaseAuth.AuthStateListener mAuthListener;
 
+  private String name;
 
   public RegisterManager(RegisterCredentialsValidator registerCredentialsValidator) {
     this.credentialsValidator = registerCredentialsValidator;
@@ -36,10 +38,15 @@ public class RegisterManager {
       @Override public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
+          UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+              .setDisplayName(name)
+              .build();
+          user.updateProfile(profileUpdates);
           if (user.isEmailVerified()) {
             System.out.println("Email is verified");
             System.out.println("onAuthStateChanged:signed_in:" + user.getUid());
             System.out.println(user.getDisplayName());
+
           } else {
             user.sendEmailVerification();
             System.out.println("Email is not verified");
@@ -64,15 +71,15 @@ public class RegisterManager {
     removeAuthListener();
   }
 
-  public void registerNewUser(String name, String username, String password,
-      String passwordConfirmation, String birthday, String city,
+  public void registerNewUser(String name, String email, String password,
+      String passwordConfirmation,
       RegisterPresenter.RegisterListener listener) {
     int inputsValidationResult =
-        credentialsValidator.validate(name, username, password, passwordConfirmation, birthday,
-            city);
+        credentialsValidator.validate(name, email, password, passwordConfirmation);
 
     if (inputsValidationResult == RegisterCredentialsValidator.SUCCESS) {
-      mAuth.createUserWithEmailAndPassword(username, password)
+      this.name = name;
+      mAuth.createUserWithEmailAndPassword(email, password)
           .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override public void onComplete(@NonNull Task<AuthResult> task) {
               System.out.println("createUserWithEmail:onComplete:" + task.isSuccessful());
